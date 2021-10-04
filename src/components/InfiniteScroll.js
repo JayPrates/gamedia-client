@@ -16,7 +16,8 @@ const containerStyle = {
     maxWidth: '1280px',
     margin: '0 auto',
 }
-function InfiniteScroll ({searchBarVal}) {
+
+function InfiniteScroll ({searchValue}) {
     const [postList, setPostList] = useState({
         list: [1,2,3,4]
     }); 
@@ -26,6 +27,7 @@ function InfiniteScroll ({searchBarVal}) {
     const loader = useRef(null);
 
     useEffect(() => {
+        console.log(searchValue);
          var options = {
             root: null,
             rootMargin: "20px",
@@ -65,7 +67,7 @@ function InfiniteScroll ({searchBarVal}) {
             {
                 postList.list.map((post, index) => {
                     return (
-                        <ListGames gamePage={index} searchBarVal={searchBarVal}/>)
+                        <ListGames gamePage={index} searchValue={searchValue}/>)
                 })
             }
             <div className="loading" ref={loader}>

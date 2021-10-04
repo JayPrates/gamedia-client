@@ -14,6 +14,7 @@ import InfiniteScroll from "./components/InfiniteScroll";
 function App() {
 
 	const [loggedInUser, setCurrentLoggedInUser] = useState("");
+	const [searchValue, setSearchValue] = useState("");
 
 	useEffect(() => {
 	  async function checkLoggedIn() {
@@ -30,9 +31,9 @@ function App() {
 
 	return (
 		<div className="App">
-			<NavBar loggedInUser={loggedInUser} setCurrentLoggedInUser={setCurrentLoggedInUser}/>
+			<NavBar loggedInUser={loggedInUser} setCurrentLoggedInUser={setCurrentLoggedInUser} setSearchValue={setSearchValue}/>
 			<Switch>
-				<Route exact path={["/", "/games"]} component={InfiniteScroll} />
+				<Route exact path={["/", "/games"]} render={() => {return <InfiniteScroll  searchValue={searchValue}/>}} />
 				<Route exact path={"/games/:id"} component={GamePage}/>
 				<Route exact path={"/projects/add"} component={AddProject} />
 				<Route exact path={"/projects/:id"} component={ProjectDetails} />
