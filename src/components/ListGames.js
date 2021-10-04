@@ -25,7 +25,11 @@ function ListGames({ gamePage, searchValue }) {
 
 			const response = await axios.request(options);
 			console.log(response.data.results);
-			setGames(response.data.results);
+			if(searchValue !== '') {
+			setGames([]);
+			} else {
+				setGames(response.data.results);
+			}
 		}
 		getAllGames();
 	}, []);

@@ -122,21 +122,43 @@ function GamePage(props) {
 
 			{posts.map((post) => {
 				if (post.gameName === game.name) {
+					let date = new Date(post.createdAt);
 					return (
 						<>
 							<div css={styles2}>
 								<div className="contentPost">
 									<div className="post">
 										<div>
+											Posted by: {post.author}
+											{post.createdAt && (
+												<span>
+													{" "}
+													at:{" "}
+													{date.toLocaleString(
+														"default",
+														{
+															day: "2-digit",
+															month: "short",
+															year: "2-digit",
+														}
+													) +
+														" " +
+														date.getHours() +
+														":" +
+														String(
+															date.getMinutes()
+														).padStart(2, "0")}{" "}
+												</span>
+											)}
+										</div>
+										<div>
 											<p>{post.title}</p>
 										</div>
 										<div className="commentPost">
 											<p>{post.description}</p>
 										</div>
-
 										<br />
 									</div>
-									<LikeDislike />
 								</div>
 							</div>
 						</>
