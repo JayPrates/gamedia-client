@@ -54,7 +54,7 @@ function ListGames({ gamePage, searchValue}) {
 		getSearchGames();
 	}, [searchValue]);
 
-	return searchValue ===  '' ? (
+	return searchValue ===  null ? (
 		<div className="gameListWrapper">
 			<div css={styles}>
 				{games.map((game) => {

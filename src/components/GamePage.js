@@ -12,8 +12,12 @@ function GamePage(props) {
 	const [description, setDescription] = useState("");
 	const [posts, setPosts] = useState([]);
 	const history = useHistory();
+	const [postId, setPostId] = useState('');
 
 	const gameId = props.match.params.id;
+
+	const [likes, setLikes] = useState('');
+	const [refreshPosts, setRefreshPosts] = useState(0);
 
 
 	useEffect(() => {
@@ -45,7 +49,7 @@ function GamePage(props) {
 
 		}
 		getPosts();
-	}, []);
+	}, [refreshPosts]);
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
@@ -53,10 +57,25 @@ function GamePage(props) {
 			title: title,
 			description: description,
 			gameName: game.name,
+			likes: 0,
 		};
 		await axios.post(`http://localhost:5000/games/${gameId}`, body);
 		history.push("/games");
 	};
+
+
+	const getClickHandler = async (post) => {
+		const body = {
+			postId,
+		}
+		await axios.put(
+			`http://localhost:5000/post/${post._id}`,
+			body
+		);
+		//Calling after axios so it updates the posts first
+		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
+	};
+
 	console.log("tags", tags);
 	return (
 		<>
@@ -130,7 +149,7 @@ function GamePage(props) {
 								<div className="contentPost">
 									<div className="post">
 										<div>Posted by: {post.author}
-											{post.createdAt && <span> at: {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' +  String(date.getMinutes()).padStart(2, "0") }  </span>}
+											{post.createdAt && <span> at: {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' + String(date.getMinutes()).padStart(2, "0")}  </span>}
 										</div>
 										<div>
 											<p>{post.title}</p>
@@ -138,7 +157,10 @@ function GamePage(props) {
 										<div className="commentPost">
 											<p>{post.description}</p>
 										</div>
+										{post.likes > 0 && <p>{post.likes}</p>}
 										<br />
+
+										<button type='button' onClick={(e) => getClickHandler(post)}>Like</button>
 									</div>
 								</div>
 							</div>
