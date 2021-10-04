@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import ListGames from "./components/ListGames";
+import { Switch, Route } from "react-router";
+import ProjectDetails from "./components/ProjectDetails";
+import AddProject from "./components/AddProject";
+import NavBar from "./components/NavBar";
+import GamePage from "./components/GamePage";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import React,{useState, useEffect} from "react";
+import axios from "axios";
+import InfiniteScroll from "./components/InfiniteScroll";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	const [loggedInUser, setCurrentLoggedInUser] = useState("");
+
+	useEffect(() => {
+	  async function checkLoggedIn() {
+		const response = await axios.get(
+		  `${process.env.REACT_APP_SERVER_HOSTNAME}/isloggedin`,
+		  { withCredentials: true }
+		);
+		if (response.data.username) {
+		  setCurrentLoggedInUser(response.data);
+		}
+	  }
+	  checkLoggedIn();
+	}, []);
+
+	return (
+		<div className="App">
+			<NavBar loggedInUser={loggedInUser} setCurrentLoggedInUser={setCurrentLoggedInUser}/>
+			<Switch>
+				<Route exact path={["/", "/games"]} component={InfiniteScroll} />
+				<Route exact path={"/games/:id"} component={GamePage}/>
+				<Route exact path={"/projects/add"} component={AddProject} />
+				<Route exact path={"/projects/:id"} component={ProjectDetails} />
+				<Route path="/signup" component={Signup} />
+				<Route path="/login" render={() => {return <Login setCurrentLoggedInUser={setCurrentLoggedInUser} />;}}/>
+			</Switch>
+		</div>
+	);
 }
 
 export default App;
