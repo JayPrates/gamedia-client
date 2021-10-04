@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-// import { Card } from "@mui/material";
+import LikeDislike from "./LikeDislike";
 
 function GamePage(props) {
 	const [game, setGame] = useState({});
@@ -12,7 +12,7 @@ function GamePage(props) {
 	const [description, setDescription] = useState("");
 	const [posts, setPosts] = useState([]);
 	const history = useHistory();
-	
+
 	const gameId = props.match.params.id;
 
 	useEffect(() => {
@@ -56,6 +56,7 @@ function GamePage(props) {
 		history.push("/games");
 	};
 	console.log("tags", tags);
+
 	return (
 		<>
 			<div css={styles3}>
@@ -120,26 +121,28 @@ function GamePage(props) {
 			<h3>Posts</h3>
 
 			{posts.map((post) => {
-				if (post.gameName === game.name) {
-					                    return (
-					<>
-						<div css={styles2}>
-							<div className="contentPost">
-								<div className="post">
-									<div>
-										<p>{post.title}</p>
+				if (post.gameName === game.name) {
+					return (
+						<>
+							<div css={styles2}>
+								<div className="contentPost">
+									<div className="post">
+										<div>
+											<p>{post.title}</p>
+										</div>
+										<div className="commentPost">
+											<p>{post.description}</p>
+										</div>
+
+										<br />
 									</div>
-									<div className="commentPost">
-										<p>{post.description}</p>
-									</div>
-									<br />
+									<LikeDislike />
 								</div>
 							</div>
-						</div>
-					</>
-				);
-			}
-		})}
+						</>
+					);
+				}
+			})}
 		</>
 	);
 }

@@ -8,8 +8,7 @@ import ListGames from "./ListGames";
 import InfiniteScroll from "./InfiniteScroll";
 
 function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
-
-	const [search, setSearch] = useState('');
+	const [search, setSearch] = useState("");
 
 	const logoutUser = async () => {
 		await axios.post(
@@ -22,7 +21,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
 		setCurrentLoggedInUser("");
 	};
 
-	useEffect (() => {
+	useEffect(() => {
 		console.log(search);
 		setSearchValue(search);
 		/* return(<>
@@ -47,7 +46,12 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
 							</NavLink>
 						</button>
 						{/* <Search className='searchBar' type='search' onChange={(e) => setSearch(e.target.value)} value={search}></Search> */}
-						<input  className='searchBar' type='search' onChange={(e) => setSearch(e.target.value)} value={search} />
+						<input
+							className="searchBar"
+							type="search"
+							onChange={(e) => setSearch(e.target.value)}
+							value={search}
+						/>
 					</div>
 					<div className="authFlex">
 						<div className="welcome">

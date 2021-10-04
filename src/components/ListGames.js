@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-function ListGames({ gamePage, searchValue}) {
+function ListGames({ gamePage, searchValue }) {
 	const [games, setGames] = useState([]);
 	const [searchGames, setSearchGames] = useState([]);
 
-	console.log('called')
+	console.log("called");
 
 	useEffect(() => {
 		async function getAllGames() {
@@ -44,13 +44,13 @@ function ListGames({ gamePage, searchValue}) {
 			};
 
 			const searchResponse = await axios.request(search);
-			console.log('search games', searchResponse.data.results);
+			console.log("search games", searchResponse.data.results);
 			setSearchGames(searchResponse.data.results);
 		}
 		getSearchGames();
 	}, [searchValue]);
 
-	return searchValue ===  '' ? (
+	return searchValue === "" ? (
 		<div className="gameListWrapper">
 			<div css={styles}>
 				{games.map((game) => {
@@ -138,7 +138,7 @@ const styles = css`
 	}
 	.spacing {
 		margin-bottom: 15px;
-		width: 250px
+		width: 250px;
 	}
 `;
 
