@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef  } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ListGames from './ListGames';
 
 const divStyle = {
@@ -17,47 +17,59 @@ const containerStyle = {
     margin: '0 auto',
 }
 
-function InfiniteScroll ({searchValue}) {
+function InfiniteScroll({ searchValue }) {
+
     const [postList, setPostList] = useState({
-        list: [1,2,3,4]
-    }); 
+        list: [1, 2, 3, 4]
+    });
     // tracking on which page we currently are
     const [page, setPage] = useState(1);
     // add loader refrence 
     const loader = useRef(null);
 
+    /* const [checkValue, setCheckValue] = useState(searchValue); */
+
     useEffect(() => {
-        console.log(searchValue);
-         var options = {
+
+        setPostList({
+            list: [1]
+        });
+    }, [searchValue])
+
+    useEffect(() => {
+
+        var options = {
             root: null,
             rootMargin: "20px",
             threshold: 1.0
-         };
-        // initialize IntersectionObserver
-        // and attaching to Load More div
-         const observer = new IntersectionObserver(handleObserver, options);
-         if (loader.current) {
+        };
+
+        const observer = new IntersectionObserver(handleObserver, options);
+        if (loader.current) {
             observer.observe(loader.current)
-         }
-         console.log('page', page)
+        }
+        console.log('page', page)
+
 
     }, []);
 
 
     useEffect(() => {
         // here we simulate adding new posts to List
-        const newList = postList.list.concat([1,1,1,1]);
+        const newList = postList.list.concat([1, 1, 1, 1]);
         setPostList({
             list: newList
         })
     }, [page])
 
     // here we handle what happens when user scrolls to Load More div
-   // in this case we just update page variable
+    // in this case we just update page variable
     const handleObserver = (entities) => {
         const target = entities[0];
-        if (target.isIntersecting) {   
+
+        if (target.isIntersecting) {
             setPage((page) => page + 1)
+            console.log('pages', page)
         }
     }
 
@@ -67,12 +79,13 @@ function InfiniteScroll ({searchValue}) {
             {
                 postList.list.map((post, index) => {
                     return (
-                        <ListGames gamePage={index} searchValue={searchValue}/>)
+                        <ListGames gamePage={index} searchValue={searchValue} />)
                 })
             }
-            <div className="loading" ref={loader}>
-                    <h2>Load More</h2>
-           </div>
+
+            {!searchValue && <div className="loading" ref={loader}>
+                <h2>Load More</h2>
+            </div>}
         </div>
     </div>)
 }

@@ -12,8 +12,9 @@ function GamePage(props) {
 	const [description, setDescription] = useState("");
 	const [posts, setPosts] = useState([]);
 	const history = useHistory();
-	
+
 	const gameId = props.match.params.id;
+
 
 	useEffect(() => {
 		console.log("fetching game");
@@ -41,6 +42,7 @@ function GamePage(props) {
 				`http://localhost:5000/games/${gameId}`
 			);
 			setPosts(allPosts.data);
+
 		}
 		getPosts();
 	}, []);
@@ -120,26 +122,30 @@ function GamePage(props) {
 			<h3>Posts</h3>
 
 			{posts.map((post) => {
-				if (post.gameName === game.name) {
-					                    return (
-					<>
-						<div css={styles2}>
-							<div className="contentPost">
-								<div className="post">
-									<div>
-										<p>{post.title}</p>
+				if (post.gameName === game.name) {
+					let date = new Date(post.createdAt);
+					return (
+						<>
+							<div css={styles2}>
+								<div className="contentPost">
+									<div className="post">
+										<div>Posted by: {post.author}
+											{post.createdAt && <span> at: {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' +  String(date.getMinutes()).padStart(2, "0") }  </span>}
+										</div>
+										<div>
+											<p>{post.title}</p>
+										</div>
+										<div className="commentPost">
+											<p>{post.description}</p>
+										</div>
+										<br />
 									</div>
-									<div className="commentPost">
-										<p>{post.description}</p>
-									</div>
-									<br />
 								</div>
 							</div>
-						</div>
-					</>
-				);
-			}
-		})}
+						</>
+					);
+				}
+			})}
 		</>
 	);
 }
