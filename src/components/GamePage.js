@@ -13,6 +13,7 @@ function GamePage(props) {
 	const [posts, setPosts] = useState([]);
 	const history = useHistory();
 	const [postId, setPostId] = useState('');
+	const [image, setImage] = useState("");
 
 	const gameId = props.match.params.id;
 
@@ -25,7 +26,7 @@ function GamePage(props) {
 		async function getGame() {
 			const options = {
 				method: "GET",
-				url: `https://rawg-video-games-database.p.rapidapi.com/games/${gameId}?key=52adb4e8ceb54eac84d3538502ebe8f5`,
+				url: `https://rawg-video-games-database.p.rapidapi.com/games/${gameId}?key=bce395cc71974b6fbace7273c418bce4`,
 				headers: {
 					"x-rapidapi-host":
 						"rawg-video-games-database.p.rapidapi.com",
@@ -53,11 +54,22 @@ function GamePage(props) {
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
+		let response;
+		if (image) {
+			const uploadData = new FormData();
+			uploadData.append("file", image);
+
+			response = await axios.post(
+				`http://localhost:5000/upload`,
+				uploadData
+			);
+		}
 		const body = {
 			title: title,
 			description: description,
 			gameName: game.name,
 			likes: 0,
+			imageUrl:  image ? response.data.fileUrl : "http://lol.com",
 		};
 		await axios.post(`http://localhost:5000/games/${gameId}`, body);
 		history.push("/games");
@@ -132,6 +144,8 @@ function GamePage(props) {
 								placeholder="With a description"
 							/>
 						</div>
+						<label>Image</label>
+						<input type="file" onChange={(e) => setImage(e.target.files[0])} />
 						<div className="options">
 							<button type="submit">Submit</button>
 						</div>
@@ -157,6 +171,7 @@ function GamePage(props) {
 										<div className="commentPost">
 											<p>{post.description}</p>
 										</div>
+										{post.imageUrl && <img className='postImg' style={{ width: 350, height: 250 }} src={post.imageUrl} />}
 										{post.likes > 0 && <p>{post.likes}</p>}
 										<br />
 
@@ -191,7 +206,7 @@ const styles = css`
 		font-size: 20px;
 		font-weight: 700;
 
-		img {
+		.gameImage {
 			width: 50px;
 			height: 50px;
 			display: block;
@@ -236,7 +251,7 @@ const styles = css`
 			.item {
 				margin-right: 14px;
 				display: flex;
-				img {
+				.gameImage {
 					margin-right: 10px;
 					width: 20px;
 					height: auto;
@@ -296,7 +311,7 @@ const styles2 = css`
 	font-size: 16px;
 }
 
-		img {
+.gameImage {
 			width: 50px;
 			height: 50px;
 			display: block;

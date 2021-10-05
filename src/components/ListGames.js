@@ -4,57 +4,74 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-function ListGames({ gamePage, searchValue}) {
+function ListGames({ gamePage, searchValue }) {
 	const [games, setGames] = useState([]);
 	const [searchGames, setSearchGames] = useState([]);
+
+
 
 	console.log('called')
 
 	useEffect(() => {
 		async function getAllGames() {
-			const options = {
-				method: "GET",
-				url: `https://rawg-video-games-database.p.rapidapi.com/games?key=52adb4e8ceb54eac84d3538502ebe8f5&page=${gamePage}`,
-				headers: {
-					"x-rapidapi-host":
-						"rawg-video-games-database.p.rapidapi.com",
-					"x-rapidapi-key":
-						"3a37901a9amshcfee440bdbde618p19ae15jsndf5e6e59f232",
-				},
-			};
+			if (searchValue === "") {
+				const options = {
+					method: "GET",
+					url: `https://rawg-video-games-database.p.rapidapi.com/games?key=bce395cc71974b6fbace7273c418bce4&page=${gamePage}`,
+					headers: {
+						"x-rapidapi-host":
+							"rawg-video-games-database.p.rapidapi.com",
+						"x-rapidapi-key":
+							"3a37901a9amshcfee440bdbde618p19ae15jsndf5e6e59f232",
+					},
+				};
 
-			const response = await axios.request(options);
-			console.log(response.data.results);
-			if(searchValue !== '') {
-			setGames([]);
-			} else {
-				setGames(response.data.results);
+				const response = await axios.request(options);
+				console.log(response.data.results);
+				if (searchValue !== '') {
+					setGames([]);
+				} else {
+					setGames(response.data.results);
+				}
 			}
 		}
+
+
+
+
 		getAllGames();
-	}, []);
+
+
+	}, [searchValue]);
 
 	useEffect(() => {
 		async function getSearchGames() {
-			const search = {
-				method: "GET",
-				url: `https://rawg-video-games-database.p.rapidapi.com/games?key=52adb4e8ceb54eac84d3538502ebe8f5&search=${searchValue}`,
-				headers: {
-					"x-rapidapi-host":
-						"rawg-video-games-database.p.rapidapi.com",
-					"x-rapidapi-key":
-						"3a37901a9amshcfee440bdbde618p19ae15jsndf5e6e59f232",
-				},
-			};
+			if (searchValue !== "") {
+				const search = {
+					method: "GET",
+					url: `https://rawg-video-games-database.p.rapidapi.com/games?key=bce395cc71974b6fbace7273c418bce4&search=${searchValue}`,
+					headers: {
+						"x-rapidapi-host":
+							"rawg-video-games-database.p.rapidapi.com",
+						"x-rapidapi-key":
+							"3a37901a9amshcfee440bdbde618p19ae15jsndf5e6e59f232",
+					},
+				};
 
-			const searchResponse = await axios.request(search);
-			console.log('search games', searchResponse.data.results);
-			setSearchGames(searchResponse.data.results);
+				const searchResponse = await axios.request(search);
+				console.log('search games', searchResponse.data.results);
+				setSearchGames(searchResponse.data.results);
+
+			}
+
 		}
+
 		getSearchGames();
+
 	}, [searchValue]);
 
-	return searchValue ===  null ? (
+
+	return searchValue === '' ? (
 		<div className="gameListWrapper">
 			<div css={styles}>
 				{games.map((game) => {

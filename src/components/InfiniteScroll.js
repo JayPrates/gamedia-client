@@ -51,7 +51,7 @@ function InfiniteScroll({ searchValue }) {
         console.log('page', page)
 
 
-    }, []);
+    }, [searchValue]);
 
 
     useEffect(() => {
@@ -79,7 +79,7 @@ function InfiniteScroll({ searchValue }) {
             {
                 postList.list.map((post, index) => {
                     return (
-                        <ListGames gamePage={index} searchValue={searchValue} />)
+                        <ListGames gamePage={index + 1} searchValue={searchValue} />)
                 })
             }
 
