@@ -51,6 +51,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
 							type="search"
 							onChange={(e) => setSearch(e.target.value)}
 							value={search}
+							placeholder="Search for a game"
 						/>
 					</div>
 					<div className="authFlex">
@@ -176,6 +177,21 @@ const styles4 = css`
 
 	.welcome {
 		margin-right: 15px;
+	}
+
+	input {
+		width: 60%;
+		font-size: 16px;
+		border: none;
+		outline: none;
+		::placeholder {
+			color: black;
+		}
+	}
+	input.searchBar {
+		background-color: #fff;
+		padding: 5px 20px;
+		border-radius: 5px;
 	}
 `;
 

@@ -105,6 +105,9 @@ function GamePage(props) {
 							<div>Metacritic: {game.metacritic}</div>
 							<div>Rating: {game.rating}</div>
 						</div>
+						<div className="tags">
+							<label>Tags:</label>
+						</div>
 						<div className="tagImg">
 							{tags.map((tag, index) => {
 								if (index < 5) {
@@ -177,7 +180,7 @@ function GamePage(props) {
 													<div>
 														{post.createdAt && (
 															<span>
-																{" "}
+																Post created:{" "}
 																{date.toLocaleString(
 																	"default",
 																	{
@@ -201,7 +204,7 @@ function GamePage(props) {
 												</div>
 											</div>
 										</div>
-										<div>
+										<div className="postTitle">
 											<p>{post.title}</p>
 										</div>
 										<div className="commentPost">
@@ -262,6 +265,7 @@ const styles = css`
 	width: 100%;
 	background: #151728;
 	border-radius: 4px;
+
 	.postNav {
 		display: flex;
 		padding: 22px;
@@ -358,6 +362,11 @@ const styles = css`
 			}
 		}
 	}
+
+	h3 {
+		display: flex;
+    	justify-content: center;
+	}
 `;
 
 //Styles for posts list
@@ -367,6 +376,20 @@ const styles2 = css`
 	border-radius: 15px;
 	margin: auto;
 	margin-bottom: 10px;
+
+	.centerWrap {
+		font-size: 20px;
+    	padding-top: 10px;
+		font-weight: 700;
+	}
+
+	.centerWrap span {
+		font-size: 14px;
+	}
+
+	.postTitle {
+		font-size: 16px;
+	}
 
 	.wrapPicAndName {
 		display: flex;
@@ -399,7 +422,7 @@ const styles2 = css`
 		font-weight: 700;
 
 .commentPost {
-	font-size: 16px;
+	font-size: 14px;
 }
 
 
@@ -456,6 +479,22 @@ const styles3 = css`
 	}
 	.gameDetails div {
 		margin-right: 10px;
+	}
+
+	.tagImg {
+		display: flex;
+		flex-direction: row;
+		padding-top: 10px;
+	}
+
+	.tagImg div {
+		border: 0.5px solid white;
+		border-radius: 15px;
+		padding: 5px 7px 5px 7px;
+	}
+
+	.tags {
+		margin-top: 20px;
 	}
 `;
 
