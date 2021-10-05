@@ -33,7 +33,7 @@ function Signup() {
 			body
 		);
 		toast.success("Signup sucessful");
-		history.push("/projects");
+		history.push("/");
 	};
 
 	return (

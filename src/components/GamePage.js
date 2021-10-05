@@ -44,7 +44,7 @@ function GamePage(props) {
 
 		async function getPosts() {
 			const allPosts = await axios.get(
-				`http://localhost:5000/games/${gameId}`
+				`http://localhost:5000/games/${gameId}`, { withCredentials: true }
 			);
 			setPosts(allPosts.data);
 
@@ -71,8 +71,9 @@ function GamePage(props) {
 			likes: 0,
 			mediaUrl: response && response.data.fileUrl,
 		};
-		await axios.post(`http://localhost:5000/games/${gameId}`, body);
-		history.push("/games");
+		await axios.post(`http://localhost:5000/games/${gameId}`, body, { withCredentials: true });
+		history.push(`/games/${gameId}`);
+		setRefreshPosts(refreshPosts === 0 ? 1 : 0)
 	};
 
 
@@ -115,7 +116,9 @@ function GamePage(props) {
 					</div>
 				</div>
 			</div>
-			<div>{game.description_raw}</div>
+			<div css={styles4}>
+				<div className="gameDesc">{game.description_raw}</div>
+			</div>
 			<h3>Make a Post</h3>
 			<div css={styles} className="wrapForm">
 				<div className="contentPost">
@@ -162,11 +165,13 @@ function GamePage(props) {
 							<div css={styles2}>
 								<div className="contentPost">
 									<div className="postForm">
-										<div>
-											<img src={post.userImg}/>
-										<div>Posted by: {post.author}
-											<div>
-												{post.createdAt && <span> {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' + String(date.getMinutes()).padStart(2, "0")}  </span>}
+										<div className= 'centerWrap'>
+										<div className='wrapPicAndName'>
+											{post.userImg && <img src={post.userImg} />}
+											<div>{post.author}
+												<div>
+													{post.createdAt && <span> {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' + String(date.getMinutes()).padStart(2, "0")}  </span>}
+												</div>
 											</div>
 										</div>
 										</div>
@@ -310,6 +315,18 @@ const styles2 = css`
 	border-radius: 15px;
 	margin: auto;
 	margin-bottom: 10px;
+
+	.wrapPicAndName {
+		display: flex;
+		align-items: center;
+	}
+
+	.wrapPicAndName img{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
 	
 	.postNav {
 		display: flex;
@@ -387,6 +404,24 @@ const styles3 = css`
 	}
 	.gameDetails div {
 		margin-right: 10px;
+	}
+`;
+
+const styles4 = css`
+	width: 90%;
+	margin: auto;
+	background: #151728;
+	border-radius: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	.gameDesc {
+		display: flex;
+		justify-content: center;
+		width: 1200px;
+		margin: auto;
+		padding: 5px;
+		font-size: 16px;
 	}
 `;
 
