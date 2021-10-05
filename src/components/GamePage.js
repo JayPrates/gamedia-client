@@ -82,8 +82,7 @@ function GamePage(props) {
 			postId,
 		}
 		await axios.put(
-			`http://localhost:5000/post/${post._id}`,
-			body
+			`http://localhost:5000/post/${post._id}`, body, { withCredentials: true }
 		);
 		//Calling after axios so it updates the posts first
 		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
