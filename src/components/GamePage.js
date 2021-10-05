@@ -69,7 +69,7 @@ function GamePage(props) {
 			description: description,
 			gameName: game.name,
 			likes: 0,
-			mediaUrl: image ? response.data.fileUrl : "http://lol.com",
+			mediaUrl: response && response.data.fileUrl,
 		};
 		await axios.post(`http://localhost:5000/games/${gameId}`, body);
 		history.push("/games");
