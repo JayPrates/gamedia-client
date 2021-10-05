@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ListGames from './ListGames';
+import React, { useEffect, useState, useRef } from "react";
+import ListGames from "./ListGames";
 
 const divStyle = {
 	color: "blue",
@@ -13,45 +13,9 @@ const divStyle = {
 console.log("lol");
 
 const containerStyle = {
-    maxWidth: '1280px',
-    margin: '0 auto',
-}
-
-function InfiniteScroll({ searchValue }) {
-
-    const [postList, setPostList] = useState({
-        list: [1, 2, 3, 4]
-    });
-    // tracking on which page we currently are
-    const [page, setPage] = useState(1);
-    // add loader refrence 
-    const loader = useRef(null);
-
-    /* const [checkValue, setCheckValue] = useState(searchValue); */
-
-    useEffect(() => {
-
-        setPostList({
-            list: [1]
-        });
-    }, [searchValue])
-
-    useEffect(() => {
-
-        var options = {
-            root: null,
-            rootMargin: "20px",
-            threshold: 1.0
-        };
-
-        const observer = new IntersectionObserver(handleObserver, options);
-        if (loader.current) {
-            observer.observe(loader.current)
-        }
-        console.log('page', page)
-
-
-    }, []);
+	maxWidth: "1280px",
+	margin: "0 auto",
+};
 
 function InfiniteScroll({ searchValue }) {
 	const [postList, setPostList] = useState({
@@ -62,24 +26,13 @@ function InfiniteScroll({ searchValue }) {
 	// add loader refrence
 	const loader = useRef(null);
 
-    useEffect(() => {
-        // here we simulate adding new posts to List
-        const newList = postList.list.concat([1, 1, 1, 1]);
-        setPostList({
-            list: newList
-        })
-    }, [page])
-
-    // here we handle what happens when user scrolls to Load More div
-    // in this case we just update page variable
-    const handleObserver = (entities) => {
-        const target = entities[0];
-
-        if (target.isIntersecting) {
-            setPage((page) => page + 1)
-            console.log('pages', page)
-        }
-    }
+	useEffect(() => {
+		// here we simulate adding new posts to List
+		const newList = postList.list.concat([1, 1, 1, 1]);
+		setPostList({
+			list: newList,
+		});
+	}, [page]);
 
 	// here we handle what happens when user scrolls to Load More div
 	// in this case we just update page variable
@@ -90,20 +43,23 @@ function InfiniteScroll({ searchValue }) {
 		}
 	};
 
-    return (<div className="container" style={containerStyle}>
-        <div className="post-list">
-            {
-                postList.list.map((post, index) => {
-                    return (
-                        <ListGames gamePage={index} searchValue={searchValue} />)
-                })
-            }
+	return (
+		<div className="container" style={containerStyle}>
+			<div className="post-list">
+				{postList.list.map((post, index) => {
+					return (
+						<ListGames gamePage={index} searchValue={searchValue} />
+					);
+				})}
 
-            {!searchValue && <div className="loading" ref={loader}>
-                <h2>Load More</h2>
-            </div>}
-        </div>
-    </div>)
+				{!searchValue && (
+					<div className="loading" ref={loader}>
+						<h2>Load More</h2>
+					</div>
+				)}
+			</div>
+		</div>
+	);
 }
 
 export default InfiniteScroll;

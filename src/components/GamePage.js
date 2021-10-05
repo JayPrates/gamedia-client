@@ -3,7 +3,8 @@ import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import LikeDislike from "./LikeDislike";
+// import LikeButton from "./LikeButton";
+import Liker from "./Liker";
 
 function GamePage(props) {
 	const [game, setGame] = useState({});
@@ -159,6 +160,8 @@ function GamePage(props) {
 										</div>
 										<br />
 									</div>
+									{/* <LikeButton /> */}
+									<Liker />
 								</div>
 							</div>
 						</>
@@ -312,7 +315,9 @@ const styles2 = css`
 				font-weight: 600;
 			}
 		}
-	}`;
+	}
+
+	`;
 
 const styles3 = css`
 	width: 100%;
