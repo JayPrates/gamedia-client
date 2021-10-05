@@ -26,6 +26,28 @@ function InfiniteScroll({ searchValue }) {
 	// add loader refrence
 	const loader = useRef(null);
 
+	/* const [checkValue, setCheckValue] = useState(searchValue); */
+
+	useEffect(() => {
+		setPostList({
+			list: [1],
+		});
+	}, [searchValue]);
+
+	useEffect(() => {
+		var options = {
+			root: null,
+			rootMargin: "20px",
+			threshold: 1.0,
+		};
+
+		const observer = new IntersectionObserver(handleObserver, options);
+		if (loader.current) {
+			observer.observe(loader.current);
+		}
+		console.log("page", page);
+	}, [searchValue]);
+
 	useEffect(() => {
 		// here we simulate adding new posts to List
 		const newList = postList.list.concat([1, 1, 1, 1]);
@@ -38,8 +60,10 @@ function InfiniteScroll({ searchValue }) {
 	// in this case we just update page variable
 	const handleObserver = (entities) => {
 		const target = entities[0];
+
 		if (target.isIntersecting) {
 			setPage((page) => page + 1);
+			console.log("pages", page);
 		}
 	};
 
@@ -48,7 +72,10 @@ function InfiniteScroll({ searchValue }) {
 			<div className="post-list">
 				{postList.list.map((post, index) => {
 					return (
-						<ListGames gamePage={index} searchValue={searchValue} />
+						<ListGames
+							gamePage={index + 1}
+							searchValue={searchValue}
+						/>
 					);
 				})}
 

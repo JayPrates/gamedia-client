@@ -13,15 +13,20 @@ function GamePage(props) {
 	const [description, setDescription] = useState("");
 	const [posts, setPosts] = useState([]);
 	const history = useHistory();
+	const [postId, setPostId] = useState("");
+	const [image, setImage] = useState("");
 
 	const gameId = props.match.params.id;
+
+	const [likes, setLikes] = useState("");
+	const [refreshPosts, setRefreshPosts] = useState(0);
 
 	useEffect(() => {
 		console.log("fetching game");
 		async function getGame() {
 			const options = {
 				method: "GET",
-				url: `https://rawg-video-games-database.p.rapidapi.com/games/${gameId}?key=52adb4e8ceb54eac84d3538502ebe8f5`,
+				url: `https://rawg-video-games-database.p.rapidapi.com/games/${gameId}?key=bce395cc71974b6fbace7273c418bce4`,
 				headers: {
 					"x-rapidapi-host":
 						"rawg-video-games-database.p.rapidapi.com",
@@ -44,18 +49,40 @@ function GamePage(props) {
 			setPosts(allPosts.data);
 		}
 		getPosts();
-	}, []);
+	}, [refreshPosts]);
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
+		let response;
+		if (image) {
+			const uploadData = new FormData();
+			uploadData.append("file", image);
+
+			response = await axios.post(
+				`http://localhost:5000/upload`,
+				uploadData
+			);
+		}
 		const body = {
 			title: title,
 			description: description,
 			gameName: game.name,
+			likes: 0,
+			imageUrl: image ? response.data.fileUrl : "http://lol.com",
 		};
 		await axios.post(`http://localhost:5000/games/${gameId}`, body);
 		history.push("/games");
 	};
+
+	const getClickHandler = async (post) => {
+		const body = {
+			postId,
+		};
+		await axios.put(`http://localhost:5000/post/${post._id}`, body);
+		//Calling after axios so it updates the posts first
+		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
+	};
+
 	console.log("tags", tags);
 
 	return (
@@ -113,6 +140,11 @@ function GamePage(props) {
 								placeholder="With a description"
 							/>
 						</div>
+						<label>Image</label>
+						<input
+							type="file"
+							onChange={(e) => setImage(e.target.files[0])}
+						/>
 						<div className="options">
 							<button type="submit">Submit</button>
 						</div>
@@ -158,7 +190,28 @@ function GamePage(props) {
 										<div className="commentPost">
 											<p>{post.description}</p>
 										</div>
+										{post.imageUrl && (
+											<img
+												className="postImg"
+												style={{
+													width: 350,
+													height: 250,
+												}}
+												src={post.imageUrl}
+												alt="post"
+											/>
+										)}
+										{post.likes > 0 && <p>{post.likes}</p>}
 										<br />
+
+										<button
+											type="button"
+											onClick={(e) =>
+												getClickHandler(post)
+											}
+										>
+											Like
+										</button>
 									</div>
 									{/* <LikeButton /> */}
 									<Liker />
@@ -191,7 +244,7 @@ const styles = css`
 		font-size: 20px;
 		font-weight: 700;
 
-		img {
+		.gameImage {
 			width: 50px;
 			height: 50px;
 			display: block;
@@ -236,7 +289,7 @@ const styles = css`
 			.item {
 				margin-right: 14px;
 				display: flex;
-				img {
+				.gameImage {
 					margin-right: 10px;
 					width: 20px;
 					height: auto;
@@ -296,7 +349,7 @@ const styles2 = css`
 	font-size: 16px;
 }
 
-		img {
+.gameImage {
 			width: 50px;
 			height: 50px;
 			display: block;
