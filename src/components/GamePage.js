@@ -126,8 +126,26 @@ function GamePage(props) {
 				<div className="contentPost">
 					<form onSubmit={handleFormSubmit}>
 						<div className="post">
-							<div>
-								<label>Title</label>
+							<div className='wrapper'>
+								<div>
+									<label>Title</label>
+								</div>
+								<div className='wrapButton'>
+									<div className="image-upload">
+										<div className='backgroundForUpload'>
+											<label for="file-input">
+												<img src="/upload.png" width='25px' height='25px' />
+											</label>
+										</div>
+									</div>
+
+
+									<input
+										id='file-input'
+										type="file"
+										onChange={(e) => setImage(e.target.files[0])}
+									/>
+								</div>
 							</div>
 
 							<textarea
@@ -149,11 +167,7 @@ function GamePage(props) {
 								placeholder="With a description"
 							/>
 						</div>
-						<label>Image</label>
-						<input
-							type="file"
-							onChange={(e) => setImage(e.target.files[0])}
-						/>
+
 						<div className="options">
 							<button type="submit">Submit</button>
 						</div>
@@ -213,26 +227,26 @@ function GamePage(props) {
 									</div>
 									<div className="mediaFile">
 										{post.mediaUrl &&
-										post.mediaUrl.includes("video")
+											post.mediaUrl.includes("video")
 											? post.mediaUrl && (
-													<video
-														width="320"
-														height="240"
-														controls
-														src={post.mediaUrl}
-														type="video/mp4"
-													></video>
-											  )
+												<video
+													width="320"
+													height="240"
+													controls
+													src={post.mediaUrl}
+													type="video/mp4"
+												></video>
+											)
 											: post.mediaUrl && (
-													<img
-														className="postImg"
-														style={{
-															width: 350,
-															height: 250,
-														}}
-														src={post.mediaUrl}
-													/>
-											  )}
+												<img
+													className="postImg"
+													style={{
+														width: 350,
+														height: 250,
+													}}
+													src={post.mediaUrl}
+												/>
+											)}
 									</div>
 									<br />
 									<div className="likes">
@@ -265,6 +279,29 @@ const styles = css`
 	width: 100%;
 	background: #151728;
 	border-radius: 4px;
+
+
+	.wrapButton input {
+  display: none;
+}
+
+.wrapper {
+	width: 100%;
+	display: flex;
+    justify-content: space-between;
+}
+
+	.image-upload {
+		width: 35px;
+    	background-color: white;
+    	padding-top: 5px;
+    	border-radius: 50%;
+	}
+
+	.backgroundForUpload {
+		display: flex;
+    	justify-content: center;
+	}
 
 	.postNav {
 		display: flex;
