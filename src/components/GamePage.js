@@ -69,7 +69,7 @@ function GamePage(props) {
 			description: description,
 			gameName: game.name,
 			likes: 0,
-			imageUrl:  image ? response.data.fileUrl : "http://lol.com",
+			mediaUrl: image ? response.data.fileUrl : "http://lol.com",
 		};
 		await axios.post(`http://localhost:5000/games/${gameId}`, body);
 		history.push("/games");
@@ -161,9 +161,14 @@ function GamePage(props) {
 						<>
 							<div css={styles2}>
 								<div className="contentPost">
-									<div className="post">
+									<div className="postForm">
+										<div>
+											<img src={post.userImg}/>
 										<div>Posted by: {post.author}
-											{post.createdAt && <span> at: {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' + String(date.getMinutes()).padStart(2, "0")}  </span>}
+											<div>
+												{post.createdAt && <span> {date.toLocaleString('default', { day: '2-digit', month: 'short', year: '2-digit' }) + " " + date.getHours() + ':' + String(date.getMinutes()).padStart(2, "0")}  </span>}
+											</div>
+										</div>
 										</div>
 										<div>
 											<p>{post.title}</p>
@@ -171,11 +176,19 @@ function GamePage(props) {
 										<div className="commentPost">
 											<p>{post.description}</p>
 										</div>
-										{post.imageUrl && <img className='postImg' style={{ width: 350, height: 250 }} src={post.imageUrl} />}
-										{post.likes > 0 && <p>{post.likes}</p>}
-										<br />
-
-										<button type='button' onClick={(e) => getClickHandler(post)}>Like</button>
+									</div>
+									<div className='mediaFile'>
+										{post.mediaUrl && post.mediaUrl.includes("video") ? post.mediaUrl && <video width="320" height="240" controls
+											src={post.mediaUrl} type="video/mp4">
+										</video>
+											: post.mediaUrl && <img className='postImg' style={{ width: 350, height: 250 }} src={post.mediaUrl} />}
+									</div>
+									<br />
+									<div className='likes'>
+										<div>
+											<button type='button' onClick={(e) => getClickHandler(post)}>Like</button>
+										</div>
+										{post.likes > 0 && <div>{post.likes}</div>}
 									</div>
 								</div>
 							</div>
@@ -206,6 +219,7 @@ const styles = css`
 		font-size: 20px;
 		font-weight: 700;
 
+		
 		.gameImage {
 			width: 50px;
 			height: 50px;
@@ -226,8 +240,12 @@ const styles = css`
 			}
 		}
 	}
-
-
+	.mediaFile {
+		display: flex;
+		justify-content: center;
+	}
+	
+	
 	.wrapForm {
 		width: 500px;
 		margin: auto;
@@ -298,18 +316,23 @@ const styles2 = css`
 		padding: 22px;
 		}
 	}
-	.post {
+	.likes{
+		display: flex;
+		padding: 15px;
+	}
+	.postForm {
 		color: #fff;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		padding: 22px 22px 5px 22px;
+		align-items: flex-start;;
+		padding: 0px 22px 5px 22px;
 		font-size: 28px;
 		font-weight: 700;
 
 .commentPost {
 	font-size: 16px;
 }
+
 
 .gameImage {
 			width: 50px;
