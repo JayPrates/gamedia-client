@@ -422,6 +422,7 @@ const styles2 = css`
 		font-size: 20px;
     	padding-top: 10px;
 		font-weight: 700;
+		padding-bottom: 10px;
 	}
 
 	.centerWrap span {
@@ -430,6 +431,8 @@ const styles2 = css`
 
 	.postTitle {
 		font-size: 16px;
+		width: 100%;
+		border-top: 1px solid #272a3a;
 	}
 
 	.wrapPicAndName {
