@@ -134,7 +134,7 @@ function GamePage(props) {
 									<div className="image-upload">
 										<div className='backgroundForUpload'>
 											<label for="file-input">
-												<img src="/upload.png" width='25px' height='25px' />
+												<img src="/upload.png" width='15px' height='15px' />
 											</label>
 										</div>
 									</div>
@@ -291,16 +291,20 @@ const styles = css`
     justify-content: space-between;
 }
 
-	.image-upload {
-		width: 35px;
-    	background-color: white;
-    	padding-top: 5px;
-    	border-radius: 50%;
-	}
 
 	.backgroundForUpload {
 		display: flex;
     	justify-content: center;
+	}
+
+	.image-upload {
+		width: 25px;
+    	background-color: white;
+    	border-radius: 50%;
+		&:hover {
+			background-color: #662bba;
+			color: #fff;
+		}
 	}
 
 	.postNav {
