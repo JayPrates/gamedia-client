@@ -3,8 +3,6 @@ import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-// import LikeButton from "./LikeButton";
-import Liker from "./Liker";
 
 function GamePage(props) {
 	const [game, setGame] = useState({});
@@ -18,7 +16,6 @@ function GamePage(props) {
 
 	const gameId = props.match.params.id;
 
-	const [likes, setLikes] = useState("");
 	const [refreshPosts, setRefreshPosts] = useState(0);
 
 	useEffect(() => {
@@ -101,6 +98,7 @@ function GamePage(props) {
 							<div>Metacritic: {game.metacritic}</div>
 							<div>Rating: {game.rating}</div>
 						</div>
+						<br />
 						<div className="tagImg">
 							{tags.map((tag, index) => {
 								if (index < 5) {
@@ -111,8 +109,14 @@ function GamePage(props) {
 					</div>
 				</div>
 			</div>
-			<div>{game.description_raw}</div>
-			<h3>Make a Post</h3>
+			<div css={styles6}>
+				<div className="gameDesc">{game.description_raw}</div>
+			</div>
+			<div css={styles5}>
+				<div className="postTitle">
+					<h3>Make a Post</h3>
+				</div>
+			</div>
 			<div css={styles} className="wrapForm">
 				<div className="contentPost">
 					<form onSubmit={handleFormSubmit}>
@@ -151,7 +155,7 @@ function GamePage(props) {
 					</form>
 				</div>
 			</div>
-			<h3>Posts</h3>
+			<h3 className="postTitle">Posts</h3>
 
 			{posts.map((post) => {
 				if (post.gameName === game.name) {
@@ -213,8 +217,6 @@ function GamePage(props) {
 											Like
 										</button>
 									</div>
-									{/* <LikeButton /> */}
-									<Liker />
 								</div>
 							</div>
 						</>
@@ -230,6 +232,7 @@ const styles = css`
 	width: 100%;
 	background: #151728;
 	border-radius: 4px;
+
 	.postNav {
 		display: flex;
 		padding: 22px;
@@ -264,7 +267,6 @@ const styles = css`
 			}
 		}
 	}
-
 
 	.wrapForm {
 		width: 500px;
@@ -330,12 +332,30 @@ const styles2 = css`
 	border-radius: 15px;
 	margin: auto;
 	margin-bottom: 10px;
-	
+
+	button {
+			border: none;
+			outline: none;
+			text-decoration: none;
+			background: #0e438c;
+			color: #fff;
+			font-size: 18px;
+			font-weight: 500;
+			padding: 10px 24px;
+			border-radius: 10px;
+			cursor: pointer;
+			margin-bottom: 5px;
+			margin-right: 20px;
+			&:hover {
+				background-color: #4895ef;
+				color: #fff;
+			}
+		}
+
 	.postNav {
 		display: flex;
 		padding: 22px;
 		}
-	}
 	.post {
 		color: #fff;
 		display: flex;
@@ -344,6 +364,7 @@ const styles2 = css`
 		padding: 22px 22px 5px 22px;
 		font-size: 28px;
 		font-weight: 700;
+	}
 
 .commentPost {
 	font-size: 16px;
@@ -379,6 +400,7 @@ const styles3 = css`
 	border-radius: 4px;
 	background: #151728;
 	color: #fff;
+
 	.gameTitle {
 		font-size: 26px;
 		font-weight: 700;
@@ -404,6 +426,32 @@ const styles3 = css`
 	}
 	.gameDetails div {
 		margin-right: 10px;
+	}
+`;
+
+const styles5 = css`
+	.postTitle {
+		display: flex;
+		justify-content: center;
+		font-size: 24px;
+	}
+`;
+
+const styles6 = css`
+	width: 90%;
+	margin: auto;
+	background: #151728;
+	border-radius: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	.gameDesc {
+		display: flex;
+		justify-content: center;
+		width: 1200px;
+		margin: auto;
+		padding: 5px;
+		font-size: 16px;
 	}
 `;
 

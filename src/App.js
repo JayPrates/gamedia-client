@@ -1,8 +1,6 @@
 import "./App.css";
 import ListGames from "./components/ListGames";
 import { Switch, Route } from "react-router";
-import ProjectDetails from "./components/ProjectDetails";
-import AddProject from "./components/AddProject";
 import NavBar from "./components/NavBar";
 import GamePage from "./components/GamePage";
 import Signup from "./components/Signup";
@@ -44,12 +42,6 @@ function App() {
 					}}
 				/>
 				<Route exact path={"/games/:id"} component={GamePage} />
-				<Route exact path={"/projects/add"} component={AddProject} />
-				<Route
-					exact
-					path={"/projects/:id"}
-					component={ProjectDetails}
-				/>
 				<Route path="/signup" component={Signup} />
 				<Route
 					path="/login"
