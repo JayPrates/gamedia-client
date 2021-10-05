@@ -1,17 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import ListGames from "./ListGames";
 
-const divStyle = {
-	color: "blue",
-	height: "250px",
-	textAlign: "center",
-	padding: "5px 10px",
-	background: "#eee",
-	marginTop: "15px",
-};
-
-console.log("lol");
-
 const containerStyle = {
 	maxWidth: "1280px",
 	margin: "0 auto",
