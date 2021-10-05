@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+// import { Card } from "@mui/material";
 
 function GamePage(props) {
 	const [game, setGame] = useState({});
@@ -16,6 +17,7 @@ function GamePage(props) {
 
 	const gameId = props.match.params.id;
 
+	const [likes, setLikes] = useState("");
 	const [refreshPosts, setRefreshPosts] = useState(0);
 
 	useEffect(() => {
@@ -85,7 +87,6 @@ function GamePage(props) {
 	};
 
 	console.log("tags", tags);
-
 	return (
 		<>
 			<div css={styles3}>
@@ -102,7 +103,6 @@ function GamePage(props) {
 							<div>Metacritic: {game.metacritic}</div>
 							<div>Rating: {game.rating}</div>
 						</div>
-						<br />
 						<div className="tagImg">
 							{tags.map((tag, index) => {
 								if (index < 5) {
@@ -155,7 +155,7 @@ function GamePage(props) {
 					</form>
 				</div>
 			</div>
-			<h3 className="postTitle">Posts</h3>
+			<h3>Posts</h3>
 
 			{posts.map((post) => {
 				if (post.gameName === game.name) {
@@ -260,7 +260,6 @@ const styles = css`
 	width: 100%;
 	background: #151728;
 	border-radius: 4px;
-
 	.postNav {
 		display: flex;
 		padding: 22px;
@@ -396,7 +395,6 @@ const styles2 = css`
 		padding: 0px 22px 5px 22px;
 		font-size: 28px;
 		font-weight: 700;
-	}
 
 .commentPost {
 	font-size: 16px;
@@ -422,9 +420,7 @@ const styles2 = css`
 				font-weight: 600;
 			}
 		}
-	}
-
-	`;
+	}`;
 
 const styles3 = css`
 	width: 100%;
@@ -433,7 +429,6 @@ const styles3 = css`
 	border-radius: 4px;
 	background: #151728;
 	color: #fff;
-
 	.gameTitle {
 		font-size: 26px;
 		font-weight: 700;
