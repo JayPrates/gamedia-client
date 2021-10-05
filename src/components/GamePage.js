@@ -41,7 +41,8 @@ function GamePage(props) {
 
 		async function getPosts() {
 			const allPosts = await axios.get(
-				`http://localhost:5000/games/${gameId}`
+				`http://localhost:5000/games/${gameId}`,
+				{ withCredentials: true }
 			);
 			setPosts(allPosts.data);
 		}
@@ -65,10 +66,13 @@ function GamePage(props) {
 			description: description,
 			gameName: game.name,
 			likes: 0,
-			imageUrl: image ? response.data.fileUrl : "http://lol.com",
+			mediaUrl: response && response.data.fileUrl,
 		};
-		await axios.post(`http://localhost:5000/games/${gameId}`, body);
-		history.push("/games");
+		await axios.post(`http://localhost:5000/games/${gameId}`, body, {
+			withCredentials: true,
+		});
+		history.push(`/games/${gameId}`);
+		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
 	};
 
 	const getClickHandler = async (post) => {
@@ -109,14 +113,10 @@ function GamePage(props) {
 					</div>
 				</div>
 			</div>
-			<div css={styles6}>
+			<div css={styles4}>
 				<div className="gameDesc">{game.description_raw}</div>
 			</div>
-			<div css={styles5}>
-				<div className="postTitle">
-					<h3>Make a Post</h3>
-				</div>
-			</div>
+			<h3>Make a Post</h3>
 			<div css={styles} className="wrapForm">
 				<div className="contentPost">
 					<form onSubmit={handleFormSubmit}>
@@ -164,29 +164,40 @@ function GamePage(props) {
 						<>
 							<div css={styles2}>
 								<div className="contentPost">
-									<div className="post">
-										<div>
-											Posted by: {post.author}
-											{post.createdAt && (
-												<span>
-													{" "}
-													at:{" "}
-													{date.toLocaleString(
-														"default",
-														{
-															day: "2-digit",
-															month: "short",
-															year: "2-digit",
-														}
-													) +
-														" " +
-														date.getHours() +
-														":" +
-														String(
-															date.getMinutes()
-														).padStart(2, "0")}{" "}
-												</span>
-											)}
+									<div className="postForm">
+										<div className="centerWrap">
+											<div className="wrapPicAndName">
+												{post.userImg && (
+													<img src={post.userImg} />
+												)}
+												<div>
+													{post.author}
+													<div>
+														{post.createdAt && (
+															<span>
+																{" "}
+																{date.toLocaleString(
+																	"default",
+																	{
+																		day: "2-digit",
+																		month: "short",
+																		year: "2-digit",
+																	}
+																) +
+																	" " +
+																	date.getHours() +
+																	":" +
+																	String(
+																		date.getMinutes()
+																	).padStart(
+																		2,
+																		"0"
+																	)}{" "}
+															</span>
+														)}
+													</div>
+												</div>
+											</div>
 										</div>
 										<div>
 											<p>{post.title}</p>
@@ -194,28 +205,45 @@ function GamePage(props) {
 										<div className="commentPost">
 											<p>{post.description}</p>
 										</div>
-										{post.imageUrl && (
-											<img
-												className="postImg"
-												style={{
-													width: 350,
-													height: 250,
-												}}
-												src={post.imageUrl}
-												alt="post"
-											/>
+									</div>
+									<div className="mediaFile">
+										{post.mediaUrl &&
+										post.mediaUrl.includes("video")
+											? post.mediaUrl && (
+													<video
+														width="320"
+														height="240"
+														controls
+														src={post.mediaUrl}
+														type="video/mp4"
+													></video>
+											  )
+											: post.mediaUrl && (
+													<img
+														className="postImg"
+														style={{
+															width: 350,
+															height: 250,
+														}}
+														src={post.mediaUrl}
+													/>
+											  )}
+									</div>
+									<br />
+									<div className="likes">
+										<div>
+											<button
+												type="button"
+												onClick={(e) =>
+													getClickHandler(post)
+												}
+											>
+												Like
+											</button>
+										</div>
+										{post.likes > 0 && (
+											<div>{post.likes}</div>
 										)}
-										{post.likes > 0 && <p>{post.likes}</p>}
-										<br />
-
-										<button
-											type="button"
-											onClick={(e) =>
-												getClickHandler(post)
-											}
-										>
-											Like
-										</button>
 									</div>
 								</div>
 							</div>
@@ -247,6 +275,7 @@ const styles = css`
 		font-size: 20px;
 		font-weight: 700;
 
+		
 		.gameImage {
 			width: 50px;
 			height: 50px;
@@ -267,7 +296,12 @@ const styles = css`
 			}
 		}
 	}
-
+	.mediaFile {
+		display: flex;
+		justify-content: center;
+	}
+	
+	
 	.wrapForm {
 		width: 500px;
 		margin: auto;
@@ -333,35 +367,33 @@ const styles2 = css`
 	margin: auto;
 	margin-bottom: 10px;
 
-	button {
-			border: none;
-			outline: none;
-			text-decoration: none;
-			background: #0e438c;
-			color: #fff;
-			font-size: 18px;
-			font-weight: 500;
-			padding: 10px 24px;
-			border-radius: 10px;
-			cursor: pointer;
-			margin-bottom: 5px;
-			margin-right: 20px;
-			&:hover {
-				background-color: #4895ef;
-				color: #fff;
-			}
-		}
+	.wrapPicAndName {
+		display: flex;
+		align-items: center;
+	}
 
+	.wrapPicAndName img{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
+	
 	.postNav {
 		display: flex;
 		padding: 22px;
 		}
-	.post {
+	}
+	.likes{
+		display: flex;
+		padding: 15px;
+	}
+	.postForm {
 		color: #fff;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		padding: 22px 22px 5px 22px;
+		align-items: flex-start;;
+		padding: 0px 22px 5px 22px;
 		font-size: 28px;
 		font-weight: 700;
 	}
@@ -369,6 +401,7 @@ const styles2 = css`
 .commentPost {
 	font-size: 16px;
 }
+
 
 .gameImage {
 			width: 50px;
@@ -429,15 +462,7 @@ const styles3 = css`
 	}
 `;
 
-const styles5 = css`
-	.postTitle {
-		display: flex;
-		justify-content: center;
-		font-size: 24px;
-	}
-`;
-
-const styles6 = css`
+const styles4 = css`
 	width: 90%;
 	margin: auto;
 	background: #151728;

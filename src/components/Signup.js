@@ -9,20 +9,31 @@ function Signup() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const history = useHistory();
-	const searchValue = document.getElementById("");
+	const [image, setImage] = useState("");
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
+		let response;
+		if (image) {
+			const uploadData = new FormData();
+			uploadData.append("file", image);
+
+			response = await axios.post(
+				`http://localhost:5000/upload`,
+				uploadData
+			);
+		}
 		const body = {
 			username: username,
 			password: password,
+			userImg: response.data.fileUrl,
 		};
 		await axios.post(
 			`${process.env.REACT_APP_SERVER_HOSTNAME}/signup`,
 			body
 		);
 		toast.success("Signup sucessful");
-		history.push("/projects");
+		history.push("/");
 	};
 
 	return (
@@ -47,6 +58,10 @@ function Signup() {
 							value={password}
 							className="authTextStyle"
 							required
+						/>
+						<input
+							type="file"
+							onChange={(e) => setImage(e.target.files[0])}
 						/>
 						<button type="submit" className="button">
 							Signup
