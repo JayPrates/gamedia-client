@@ -11,6 +11,9 @@ function Profile() {
 	const [image, setImage] = useState("");
 	const [updatedImage, setUpdatedImage] = useState(false);
 
+	const favorites = [user.favoriteGames];
+	console.log('these are the favorites',favorites);
+
 	useEffect(() => {
 		async function getUser() {
 			const response = await axios.get(
@@ -77,9 +80,11 @@ function Profile() {
 					<div className="games-container">
 						Insert favorite games
 						<div className="games-list">
-							<ul>Game 1</ul>
-							<ul>Game 2</ul>
-							<ul>Game 3</ul>
+							<div>
+							{favorites.map((favGame) => {
+								return <div>{favGame}</div>
+							})}
+							</div>
 						</div>
 					</div>
 				</div>
