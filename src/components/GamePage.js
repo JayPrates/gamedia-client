@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "animate.css"
+import { whileStatement } from "@babel/types";
 
 // import { Card } from "@mui/material";
 
@@ -121,7 +122,7 @@ function GamePage(props) {
 								{game.name}
 							</div>
 							<div key={isVisible} className={isVisible ? 'animate__animated animate__bounce': 'random'}>
-								<div className='favoriteWrap'>
+								<div className='favoriteWrap' style={isVisible? {backgroundColor: 'yellow'} :{backgroundColor: 'white'}}>
 									<input
 										type="image"
 										src='/star.png' width='20px' height='20px'
@@ -543,7 +544,6 @@ const styles3 = css`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: white;
 		width: 25px;
 		height: 25px;
 		border-radius: 50%;
