@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import "animate.css"
+
 // import { Card } from "@mui/material";
 
 function GamePage(props) {
@@ -19,6 +21,8 @@ function GamePage(props) {
 
 	const [likes, setLikes] = useState("");
 	const [refreshPosts, setRefreshPosts] = useState(0);
+	const [favorite, setFavorite] = useState('');
+	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
 		console.log("fetching game");
@@ -88,6 +92,18 @@ function GamePage(props) {
 		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
 	};
 
+	const getFavoriteHandler = async (game) => {
+		const body = {
+			favoriteGames: game.name,
+		};
+		setIsVisible(!isVisible)
+		console.log(isVisible);
+		await axios.put(`http://localhost:5000/favorite`, body, {
+			withCredentials: true,
+		});
+		//Calling after axios so it updates the posts first
+	};
+
 	console.log("tags", tags);
 	return (
 		<>
@@ -100,7 +116,22 @@ function GamePage(props) {
 					/>
 
 					<div className="gameDetails">
-						<h2 className="gameTitle">{game.name}</h2>
+						<div className='wrapTitleAndStar'>
+							<div className='gameTitle'>
+								{game.name}
+							</div>
+							<div key={isVisible} className={isVisible ? 'animate__animated animate__bounce': 'random'}>
+								<div className='favoriteWrap'>
+									<input
+										type="image"
+										src='/star.png' width='20px' height='20px'
+										onClick={() =>
+											getFavoriteHandler(game)
+										}
+									/>
+								</div>
+							</div>
+						</div>
 						<div className="ratings">
 							<div>Metacritic: {game.metacritic}</div>
 							<div>Rating: {game.rating}</div>
@@ -498,11 +529,26 @@ const styles3 = css`
 	border-radius: 4px;
 	background: #151728;
 	color: #fff;
+
+	.wrapTitleAndStar{
+		display: flex;
+	}
+
 	.gameTitle {
 		font-size: 26px;
 		font-weight: 700;
 		margin-top: 0;
 	}
+	.favoriteWrap {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: white;
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+	}
+
 	.ratings {
 		display: flex;
 		flex-direction: column;

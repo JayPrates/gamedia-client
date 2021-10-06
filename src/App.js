@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import GamePage from "./components/GamePage";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Profile from "./components/Profile";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InfiniteScroll from "./components/InfiniteScroll";
@@ -53,6 +54,7 @@ function App() {
 						);
 					}}
 				/>
+				<Route exact path="/profile" component={Profile} />
 			</Switch>
 		</div>
 	);

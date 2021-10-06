@@ -54,9 +54,25 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
 							placeholder="Search for a game"
 						/>
 					</div>
+
 					<div className="authFlex">
 						<div className="welcome">
-							<div>Welcome, {loggedInUser.username}!</div>
+							<a href="/profile" style={{ color: "white" }}>
+								<div>
+									<img
+										src={loggedInUser.userImg}
+										alt=""
+										style={{
+											width: "35px",
+											height: "35px",
+											borderRadius: "50%",
+										}}
+									></img>
+								</div>
+								<div className="userNameNav">
+									{loggedInUser.username}
+								</div>
+							</a>
 						</div>
 						<div>
 							<button className="navBtn">
@@ -138,6 +154,40 @@ const styles4 = css`
 			background-color: #4895ef;
 			box-shadow: 0 0 5px #4895ef;
 		}
+	}
+
+	.userNameNav {
+		margin-left: 5px;
+	}
+
+	a {
+		color: white;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+	}
+
+	.navBtnProfile {
+		border: none;
+		outline: none;
+		background: #543a78;
+		font-size: 18px;
+		font-weight: 500;
+		padding: 10px 24px;
+		border-radius: 4px;
+		box-shadow: 0 0 5px #543a78;
+		cursor: pointer;
+		margin-bottom: 5px;
+		margin-right: 20px;
+		&:hover {
+			background-color: #4895ef;
+			box-shadow: 0 0 5px #4895ef;
+		}
+	}
+
+	.navProfile {
+		color: #fff;
+		text-decoration: none;
 	}
 
 	.navButton {
