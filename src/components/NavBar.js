@@ -289,7 +289,7 @@ const styles4 = css`
 	input.searchBar {
 		font-family: monospace;
 		background-color: #fff;
-		padding: 11px 26px 11px;
+		padding: 13px 26px 7px;
 		border-radius: 5px;
 	}
 `;
