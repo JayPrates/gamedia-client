@@ -31,6 +31,7 @@ function Login({ setCurrentLoggedInUser }) {
 			toast.error("Invalid login");
 		}
 	};
+	
 
 	return (
 		<>

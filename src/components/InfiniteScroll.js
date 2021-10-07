@@ -56,6 +56,12 @@ function InfiniteScroll({ searchValue }) {
 		}
 	};
 
+	useEffect(() => {
+		return () => {
+			console.log("Component is unmounting");
+		};
+	}, []);
+
 	return (
 		<div className="container" style={containerStyle}>
 			<div className="post-list">

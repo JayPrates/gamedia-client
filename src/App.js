@@ -54,7 +54,7 @@ function App() {
 						);
 					}}
 				/>
-				<Route exact path="/profile" component={Profile} />
+				<Route exact path="/profile" render={() => {return <Profile loggedInUser={loggedInUser}/>}}/>
 			</Switch>
 		</div>
 	);

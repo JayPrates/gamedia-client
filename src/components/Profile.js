@@ -4,15 +4,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
+import { NavLink } from "react-router-dom";
 
-function Profile() {
+function Profile({loggedInUser}) {
 	const history = useHistory();
 	const [user, setUser] = useState({});
 	const [image, setImage] = useState("");
 	const [updatedImage, setUpdatedImage] = useState(false);
+	const [fav, setFav] = useState([]);
+	const [updateUser, setUpdateUser] = useState(false)
 
-	const favorites = [user.favoriteGames];
-	console.log('these are the favorites',favorites);
 
 	useEffect(() => {
 		async function getUser() {
@@ -21,10 +22,11 @@ function Profile() {
 				{ withCredentials: true }
 			);
 			setUser(response.data);
-			console.log(response.data);
 		}
 		getUser();
 	}, [updatedImage]);
+
+	console.log(loggedInUser)
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
@@ -51,10 +53,20 @@ function Profile() {
 		setUpdatedImage(!updatedImage);
 		history.push("/profile");
 	};
+	useEffect(() => {
+		setFav(user.favoriteGames)
+	}, [user])
+
+	useEffect(() => {
+		setUpdateUser(!updateUser)
+		return () => {
+			console.log("Component is unmounting");
+		};
+	}, []);
 
 	return (
 		<>
-			{user && (
+			{fav && (
 				<div css={styles}>
 					<div className="user-container">
 						<div className="img-container">
@@ -80,11 +92,16 @@ function Profile() {
 					<div className="games-container">
 						Insert favorite games
 						<div className="games-list">
-							<div>
-							{favorites.map((favGame) => {
-								return <div>{favGame}</div>
+							{fav.map((favs) => {
+								return (<NavLink
+								className="navButton"
+								activeStyle={{ color: "white" }}
+								exact
+								to={`/games/${favs.favGameId}`}
+							>
+								{favs.favGameName}
+							</NavLink>)
 							})}
-							</div>
 						</div>
 					</div>
 				</div>

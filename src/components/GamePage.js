@@ -17,12 +17,12 @@ function GamePage(props) {
 	const history = useHistory();
 	const [postId, setPostId] = useState("");
 	const [image, setImage] = useState("");
+	const [comment, setComment] = useState('');
 
 	const gameId = props.match.params.id;
 
 	const [likes, setLikes] = useState("");
-	const [refreshPosts, setRefreshPosts] = useState(0);
-	const [favorite, setFavorite] = useState('');
+	const [refreshPosts, setRefreshPosts] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
@@ -82,6 +82,19 @@ function GamePage(props) {
 		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
 	};
 
+	const handleCommentSubmit = async (e, post) => {
+		e.preventDefault();
+		console.log('this is the comment', comment)
+		const body = {
+			comments: comment,
+		}
+
+		await axios.put(`http://localhost:5000/comments/${post._id}`, body, {
+			withCredentials: true,
+		});
+		setRefreshPosts(!refreshPosts);
+	}
+
 	const getClickHandler = async (post) => {
 		const body = {
 			postId,
@@ -90,12 +103,13 @@ function GamePage(props) {
 			withCredentials: true,
 		});
 		//Calling after axios so it updates the posts first
-		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
+		setRefreshPosts(!refreshPosts);
 	};
 
 	const getFavoriteHandler = async (game) => {
+		console.log(game)
 		const body = {
-			favoriteGames: game.name,
+			favoriteGames: { favGameName: game.name, favGameId: game.id },
 		};
 		setIsVisible(!isVisible)
 		console.log(isVisible);
@@ -121,8 +135,8 @@ function GamePage(props) {
 							<div className='gameTitle'>
 								{game.name}
 							</div>
-							<div key={isVisible} className={isVisible ? 'animate__animated animate__bounce': 'random'}>
-								<div className='favoriteWrap' style={isVisible? {backgroundColor: 'yellow'} :{backgroundColor: 'white'}}>
+							<div key={isVisible} className={isVisible ? 'animate__animated animate__bounce' : 'random'}>
+								<div className='favoriteWrap' style={isVisible ? { backgroundColor: 'yellow' } : { backgroundColor: 'white' }}>
 									<input
 										type="image"
 										src='/star.png' width='20px' height='20px'
@@ -295,6 +309,43 @@ function GamePage(props) {
 										{post.likes > 0 && (
 											<div>{post.likes}</div>
 										)}
+									</div>
+									<div>
+										<form onSubmit={(e) => handleCommentSubmit(post)}>
+											<label>Comment</label>
+											<textarea className="options"
+												key={post.id}
+												type="text"
+												onChange={(e) => setComment(e.target.value)}
+											/>
+											<button
+												type="button"
+												onClick={(e) =>
+													handleCommentSubmit(e, post)
+												}
+											>
+												Send
+											</button>
+										</form>
+										<div>
+											{post.comments.map((comment) => {
+												return (
+													<>
+														{comment.theUser && <div css={styles5}>
+															<br />
+															<div className='postComments'>
+																<div className='commentDetails'>
+																	{comment.theUserImg && <img className='commentUserImg' src={comment.theUserImg} width='40px' height='40px' />}
+																	{comment.theUser && <div className='commentUserName'>{comment.theUser}</div>}
+																</div>
+															</div>
+															<div className='userComment'>
+																<div>{comment.thisComment}</div>
+															</div>
+														</div>}
+													</>)
+											})}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -604,6 +655,43 @@ const styles4 = css`
 		padding: 5px;
 		font-size: 16px;
 	}
+
+`;
+
+const styles5 = css`
+	border-top: 1px solid #272a3a;
+	margin-top: 20px;
+
+	.postComments {
+    	padding-left: 15px;
+	}
+
+	.postComments {
+		display: flex;
+    	align-items: center;
+	}
+
+	.commentDetails{
+		display: flex;
+		align-items: center;
+	}
+
+	.img{
+		padding-left: 10px;
+	}
+
+	.userComment {
+		padding: 20px;
+	}
+
+	.commentUserImg {
+		border-radius: 50%;
+	}
+
+	.commentUserName {
+		padding-left: 10px;
+	}
+
 `;
 
 export default GamePage;

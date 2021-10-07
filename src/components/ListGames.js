@@ -60,6 +60,12 @@ function ListGames({ gamePage, searchValue }) {
 		getSearchGames();
 	}, [searchValue]);
 
+	useEffect(() => {
+		return () => {
+			console.log("Component is unmounting");
+		};
+	}, []);
+
 	return searchValue === "" ? (
 		<div className="gameListWrapper">
 			<div css={styles}>
