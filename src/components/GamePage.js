@@ -48,7 +48,7 @@ function GamePage(props) {
 
 		async function getPosts() {
 			const allPosts = await axios.get(
-				`http://localhost:5000/games/${gameId}`,
+				`${process.env.REACT_APP_SERVER_HOSTNAME}/games/${gameId}`,
 				{ withCredentials: true }
 			);
 			setPosts(allPosts.data);
