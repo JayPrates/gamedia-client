@@ -1,15 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 
-function Signup() {
+function Signup({setNavbarInvisible}) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const history = useHistory();
 	const [image, setImage] = useState("");
+
+	useEffect(() => {
+		setNavbarInvisible(false);
+	}, [])
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();

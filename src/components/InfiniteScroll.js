@@ -6,9 +6,7 @@ const containerStyle = {
 	margin: "0 auto",
 };
 
-function InfiniteScroll({ searchValue/* , setTheState */ }) {
-	const [currentState, setCurrentState] = useState(true);
-		
+function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 	const [postList, setPostList] = useState({
 		list: [1, 2, 3, 4],
 	});
@@ -18,15 +16,16 @@ function InfiniteScroll({ searchValue/* , setTheState */ }) {
 	const loader = useRef(null);
 
 	/* const [checkValue, setCheckValue] = useState(searchValue); */
-	/* useEffect(() => {
-		setTheState(currentState)
-	}, [currentState]) */
 
 	useEffect(() => {
 		setPostList({
 			list: [1],
 		});
 	}, [searchValue]);
+
+	useEffect(() => {
+		setNavbarInvisible(true);
+	}, []);
 
 	useEffect(() => {
 		var options = {
@@ -61,11 +60,10 @@ function InfiniteScroll({ searchValue/* , setTheState */ }) {
 		}
 	};
 
-
-
 	useEffect(() => {
-		setCurrentState(!currentState);
 		return () => {
+			setNavbarInvisible(false);
+			/* console.log('what is this', setNavbarInvisible) */
 			console.log("Component is unmounting");
 		};
 	}, []);

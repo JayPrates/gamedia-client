@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,6 +9,10 @@ function Login({ setCurrentLoggedInUser }) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const history = useHistory();
+
+	/* useEffect(() => {
+		setNavbarInvisible(false);
+	}, []) */
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();

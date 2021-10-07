@@ -7,7 +7,7 @@ import Search from "antd/lib/input/Search";
 import ListGames from "./ListGames";
 import InfiniteScroll from "./InfiniteScroll";
 
-function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
+function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarInvisible }) {
 	const [search, setSearch] = useState("");
 
 	const logoutUser = async () => {
@@ -24,11 +24,18 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
 	useEffect(() => {
 		console.log(search);
 		setSearchValue(search);
+	
 		/* return(<>
 		<ListGames searchBarVal={search}/>
 		<InfiniteScroll searchBarVal={search}/>
 		</>) */
 	}, [search]);
+
+	useEffect(() => {
+		console.log(navbarInvisible)
+	}, [])
+
+	console.log('visible or not', navbarInvisible)
 
 	return loggedInUser ? (
 		<>
@@ -46,13 +53,13 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue }) {
 							</NavLink>
 						</button>
 						{/* <Search className='searchBar' type='search' onChange={(e) => setSearch(e.target.value)} value={search}></Search> */}
-						<input
+						{navbarInvisible  && <input
 							className="searchBar"
 							type="search"
 							onChange={(e) => setSearch(e.target.value)}
 							value={search}
 							placeholder="Search for a game"
-						/>
+						/>}
 					</div>
 
 					<div className="authFlex">

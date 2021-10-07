@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 
-function Profile({loggedInUser}) {
+function Profile({loggedInUser, setNavbarInvisible}) {
+
 	const history = useHistory();
 	const [user, setUser] = useState({});
 	const [image, setImage] = useState("");
@@ -17,6 +18,7 @@ function Profile({loggedInUser}) {
 
 	useEffect(() => {
 		async function getUser() {
+			setNavbarInvisible(false);
 			const response = await axios.get(
 				`${process.env.REACT_APP_SERVER_HOSTNAME}/profile`,
 				{ withCredentials: true }
