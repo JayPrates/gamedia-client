@@ -6,19 +6,16 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 
-function Profile({loggedInUser, setNavbarInvisible}) {
-
+function Profile({ loggedInUser }) {
 	const history = useHistory();
 	const [user, setUser] = useState({});
 	const [image, setImage] = useState("");
 	const [updatedImage, setUpdatedImage] = useState(false);
 	const [fav, setFav] = useState([]);
-	const [updateUser, setUpdateUser] = useState(false)
-
+	const [updateUser, setUpdateUser] = useState(false);
 
 	useEffect(() => {
 		async function getUser() {
-			setNavbarInvisible(false);
 			const response = await axios.get(
 				`${process.env.REACT_APP_SERVER_HOSTNAME}/profile`,
 				{ withCredentials: true }
@@ -28,7 +25,7 @@ function Profile({loggedInUser, setNavbarInvisible}) {
 		getUser();
 	}, [updatedImage]);
 
-	console.log(loggedInUser)
+	console.log(loggedInUser);
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
@@ -56,11 +53,11 @@ function Profile({loggedInUser, setNavbarInvisible}) {
 		history.push("/profile");
 	};
 	useEffect(() => {
-		setFav(user.favoriteGames)
-	}, [user])
+		setFav(user.favoriteGames);
+	}, [user]);
 
 	useEffect(() => {
-		setUpdateUser(!updateUser)
+		setUpdateUser(!updateUser);
 		return () => {
 			console.log("Component is unmounting");
 		};
@@ -74,17 +71,28 @@ function Profile({loggedInUser, setNavbarInvisible}) {
 						<div className="img-container">
 							<img src={user.userImg} alt="" />
 						</div>
-						<div className="text-container">
-							<h3>{user.username}</h3>
-							<h4>An about section?</h4>
+
+						<div className="wrapButton">
 							<form onSubmit={handleFormSubmit}>
+								<div className="imageUpload">
+									<div className="backgroundForUpload">
+										<label for="file-input">
+											<img
+												src="/upload.png"
+												width="30px"
+												height="35px"
+											/>
+										</label>
+									</div>
+								</div>
 								<input
+									id="file-input"
 									type="file"
 									onChange={(e) =>
 										setImage(e.target.files[0])
 									}
 								/>
-								<button type="submit">
+								<button className="" type="submit">
 									Update Profile Picture
 								</button>
 							</form>
@@ -92,17 +100,22 @@ function Profile({loggedInUser, setNavbarInvisible}) {
 					</div>
 
 					<div className="games-container">
-						Insert favorite games
+						Your favourite games, {user.username}
 						<div className="games-list">
 							{fav.map((favs) => {
-								return (<NavLink
-								className="navButton"
-								activeStyle={{ color: "white" }}
-								exact
-								to={`/games/${favs.favGameId}`}
-							>
-								{favs.favGameName}
-							</NavLink>)
+								return (
+									<NavLink
+										className="navButton"
+										activeStyle={{
+											color: "white",
+										}}
+										exact
+										to={`/games/${favs.favGameId}`}
+									>
+										&#160;
+										{favs.favGameName}
+									</NavLink>
+								);
 							})}
 						</div>
 					</div>
@@ -116,10 +129,58 @@ const styles = css`
 	height: 300px;
 	display: flex;
 
+	button {
+		border: none;
+		outline: none;
+		background: #662bba;
+		color: #fff;
+		font-size: 16px;
+		font-weight: 500;
+		padding: 8px 16px;
+		border-radius: 4px;
+		box-shadow: 0 0 5px #662bba;
+		cursor: pointer;
+		margin: 10px 0 5px -23px;
+		&:hover {
+			background-color: #4895ef;
+			color: #fff;
+		}
+	}
+
+	.wrapButton {
+		width: 40px;
+		margin-top: 10px;
+	}
+
+	.wrapButton input {
+		display: none;
+	}
+
+	.backgroundForUpload {
+		display: flex;
+		justify-content: center;
+		background-color: #fff;
+		border-radius: 50%;
+		&:hover {
+			background-color: #662bba;
+			color: #fff;
+		}
+	}
+
+	.image-upload {
+		width: 25px;
+		background-color: white;
+		border-radius: 50%;
+		&:hover {
+			background-color: #662bba;
+			color: #fff;
+		}
+	}
+
 	.user-container {
 		display: flex;
-    	flex-direction: column;
-    	align-items: center;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	.img-container img {
@@ -136,13 +197,23 @@ const styles = css`
 	.games-container {
 		text-align: center;
 		width: 75%;
+		font-size: 22px;
 	}
 
 	.games-list {
 		margin: 10px 40px 0 10px;
 		border: 1px solid black;
-		border-radius: 20px;
 		background-color: #151728;
+		display: flex;
+		flex-direction: column;
+	}
+	.games-list a {
+		text-decoration: none;
+		color: #fff;
+		margin: 5px;
+		&:hover {
+			color: #4895ef;
+		}
 	}
 `;
 

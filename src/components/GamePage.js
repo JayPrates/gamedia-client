@@ -273,37 +273,41 @@ function GamePage(props) {
 									</div>
 									<div className="mediaFile">
 										{post.mediaUrl &&
-											post.mediaUrl.includes("video")
+										post.mediaUrl.includes("video")
 											? post.mediaUrl && (
-												<video
-													width="320"
-													height="240"
-													controls
-													src={post.mediaUrl}
-													type="video/mp4"
-												></video>
-											)
+													<video
+														width="320"
+														height="240"
+														controls
+														src={post.mediaUrl}
+														type="video/mp4"
+													></video>
+											  )
 											: post.mediaUrl && (
-												<img
-													className="postImg"
-													style={{
-														width: 350,
-														height: 250,
-													}}
-													src={post.mediaUrl}
-												/>
-											)}
+													<img
+														className="postImg"
+														style={{
+															width: 350,
+															height: 250,
+														}}
+														src={post.mediaUrl}
+													/>
+											  )}
 									</div>
 									<br />
-									<div className="likes">
-										<div>
+									<div>
+										<div className="likesImage">
 											<button
-												type="button"
 												onClick={(e) =>
 													getClickHandler(post)
 												}
 											>
-												Like
+												<img
+													src="/heart.png"
+													width="30px"
+													height="30px"
+													alt=""
+												/>
 											</button>
 										</div>
 										{post.likes > 0 && (
@@ -311,14 +315,39 @@ function GamePage(props) {
 										)}
 									</div>
 									<div>
-										<form onSubmit={(e) => handleCommentSubmit(post)}>
-											<label>Comment</label>
-											<textarea className="options"
+										<form
+											onSubmit={(e) =>
+												handleCommentSubmit(post)
+											}
+										>
+											<label
+												style={{
+													fontSize: "18px",
+													marginLeft: "5px",
+												}}
+											>
+												Comment
+											</label>
+
+											<textarea
+												className="options"
 												key={post.id}
 												type="text"
-												onChange={(e) => setComment(e.target.value)}
+												onChange={(e) =>
+													setComment(e.target.value)
+												}
+												style={{
+													width: "98%",
+													margin: "5px",
+													background: "#242745",
+													border: "none",
+													color: "#fff",
+													outline: "none",
+												}}
 											/>
+											<div className='flexCommentBtn'>
 											<button
+												className="commentButton"
 												type="button"
 												onClick={(e) =>
 													handleCommentSubmit(e, post)
@@ -326,24 +355,48 @@ function GamePage(props) {
 											>
 												Send
 											</button>
+											</div>
 										</form>
+
 										<div>
 											{post.comments.map((comment) => {
 												return (
 													<>
-														{comment.theUser && <div css={styles5}>
-															<br />
-															<div className='postComments'>
-																<div className='commentDetails'>
-																	{comment.theUserImg && <img className='commentUserImg' src={comment.theUserImg} width='40px' height='40px' />}
-																	{comment.theUser && <div className='commentUserName'>{comment.theUser}</div>}
+														{comment.theUser && (
+															<div css={styles5}>
+																<br />
+																<div className="postComments">
+																	<div className="commentDetails">
+																		{comment.theUserImg && (
+																			<img
+																				className="commentUserImg"
+																				src={
+																					comment.theUserImg
+																				}
+																				width="40px"
+																				height="40px"
+																			/>
+																		)}
+																		{comment.theUser && (
+																			<div className="commentUserName">
+																				{
+																					comment.theUser
+																				}
+																			</div>
+																		)}
+																	</div>
+																</div>
+																<div className="userComment">
+																	<div>
+																		{
+																			comment.thisComment
+																		}
+																	</div>
 																</div>
 															</div>
-															<div className='userComment'>
-																<div>{comment.thisComment}</div>
-															</div>
-														</div>}
-													</>)
+														)}
+													</>
+												);
 											})}
 										</div>
 									</div>
@@ -362,7 +415,6 @@ const styles = css`
 	width: 100%;
 	background: #151728;
 	border-radius: 4px;
-
 
 	.wrapButton input {
   display: none;
@@ -476,7 +528,7 @@ const styles = css`
 			font-weight: 500;
 			padding: 10px 24px;
 			border-radius: 4px;
-			box-shadow: 0 0 5px #4895ef;
+			box-shadow: 0 0 5px #4895EF;
 			cursor: pointer;
 			margin-bottom: 5px;
 			margin-right: 20px;
@@ -491,6 +543,17 @@ const styles = css`
 		display: flex;
     	justify-content: center;
 	}
+
+	.upload {
+		background-color: #fff;
+		padding: 4px 5px 0 5px;
+		border-radius: 25px;
+		width: 25px;
+	}
+
+	.upload img{
+		width: 25px;
+	}
 `;
 
 //Styles for posts list
@@ -500,6 +563,34 @@ const styles2 = css`
 	border-radius: 15px;
 	margin: auto;
 	margin-bottom: 10px;
+
+	.likesImage button {
+		margin-left: 20px;
+		border: none;
+		background-color: #151728;
+	}
+	.flexCommentBtn{
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.commentButton {
+		margin: 20px 20px 5px 5px;
+		border: none;
+		outline: none;
+		background: #fff;
+		color: black;
+		font-size: 18px;
+		font-weight: 500;
+		padding: 8px 20px;
+		border-radius: 4px;
+		box-shadow: 0 0 5px #4895EF;
+		cursor: pointer;
+		&:hover {
+			background-color: #4895ef;
+			color: #fff;
+		}
+	}
 
 	.centerWrap {
 		font-size: 20px;
@@ -582,8 +673,12 @@ const styles3 = css`
 	background: #151728;
 	color: #fff;
 
-	.wrapTitleAndStar{
+	.wrapTitleAndStar {
 		display: flex;
+	}
+
+	.random {
+
 	}
 
 	.gameTitle {
@@ -655,7 +750,6 @@ const styles4 = css`
 		padding: 5px;
 		font-size: 16px;
 	}
-
 `;
 
 const styles5 = css`
@@ -663,20 +757,20 @@ const styles5 = css`
 	margin-top: 20px;
 
 	.postComments {
-    	padding-left: 15px;
+		padding-left: 15px;
 	}
 
 	.postComments {
 		display: flex;
-    	align-items: center;
+		align-items: center;
 	}
 
-	.commentDetails{
+	.commentDetails {
 		display: flex;
 		align-items: center;
 	}
 
-	.img{
+	.img {
 		padding-left: 10px;
 	}
 
@@ -691,7 +785,6 @@ const styles5 = css`
 	.commentUserName {
 		padding-left: 10px;
 	}
-
 `;
 
 export default GamePage;

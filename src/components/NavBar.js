@@ -41,7 +41,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 		<>
 			<div css={styles4}>
 				<nav className="navStyle">
-					<div>
+					<div className='wrapHomeSch'>
 						<button className="navBtn">
 							<NavLink
 								className="navButton"
@@ -49,7 +49,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 								exact
 								to="/"
 							>
-								Home
+								Gamidia
 							</NavLink>
 						</button>
 						{/* <Search className='searchBar' type='search' onChange={(e) => setSearch(e.target.value)} value={search}></Search> */}
@@ -82,7 +82,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 							</a>
 						</div>
 						<div>
-							<button className="navBtn">
+							<button className="navBtnLogout">
 								<NavLink
 									onClick={logoutUser}
 									className="navButton"
@@ -99,8 +99,8 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 			</div>
 		</>
 	) : (
-		<div css={styles4}>
-			<nav className="navStyle">
+		<div css={styles5}>
+			<nav className="navStyle2">
 				<div>
 					<button className="navBtn">
 						<NavLink
@@ -109,7 +109,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 							exact
 							to="/"
 						>
-							Home
+							Gamidia
 						</NavLink>
 					</button>
 				</div>
@@ -117,7 +117,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 					<div>
 						<button className="authButton">
 							<NavLink
-								className="navButton"
+								className="navButtonSL"
 								activeStyle={{ color: "white" }}
 								exact
 								to="/login"
@@ -129,7 +129,7 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 					<div>
 						<button className="authButton">
 							<NavLink
-								className="navButton"
+								className="navButtonSL"
 								activeStyle={{ color: "white" }}
 								exact
 								to="/signup"
@@ -160,6 +160,27 @@ const styles4 = css`
 		&:hover {
 			background-color: #4895ef;
 			box-shadow: 0 0 5px #4895ef;
+		}
+	}
+	.wrapHomeSch{
+		align-items: flex-start;
+	}
+
+	.navBtnLogout {
+		border: none;
+	outline: none;
+	background: #543a78;
+	font-size: 18px;
+	font-weight: 500;
+	padding: 10px 8px;
+	border-radius: 4px;
+	box-shadow: 0 0 5px #543a78;
+	cursor: pointer;
+	margin-bottom: 5px;
+	margin-right: 20px;
+	&:hover {
+		background-color: #4895ef;
+		box-shadow: 0 0 5px #4895ef;
 		}
 	}
 
@@ -198,6 +219,20 @@ const styles4 = css`
 	}
 
 	.navButton {
+		font-family: 'Press Start 2P', cursive;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.navButtonSL{
+		font-family: 'Press Start 2P', cursive;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.navButtonLogin{
+		font-size: 10px
+		font-family: 'Press Start 2P', cursive;
 		color: #fff;
 		text-decoration: none;
 	}
@@ -208,7 +243,7 @@ const styles4 = css`
 		background: #543a78;
 		font-size: 18px;
 		font-weight: 500;
-		padding: 10px 24px;
+		padding: 10px 7px;
 		border-radius: 4px;
 		box-shadow: 0 0 5px #543a78;
 		cursor: pointer;
@@ -227,6 +262,13 @@ const styles4 = css`
 		padding: 10px;
 	}
 
+	.navStyle2 {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
 	.authFlex {
 		display: flex;
 		align-items: center;
@@ -237,7 +279,6 @@ const styles4 = css`
 	}
 
 	input {
-		width: 60%;
 		font-size: 16px;
 		border: none;
 		outline: none;
@@ -246,9 +287,142 @@ const styles4 = css`
 		}
 	}
 	input.searchBar {
+		font-family: monospace;
 		background-color: #fff;
-		padding: 5px 20px;
+		padding: 11px 26px 11px;
 		border-radius: 5px;
+	}
+`;
+
+const styles5 = css`
+	.navBtn {
+		border: none;
+		outline: none;
+		background: #543a78;
+		font-size: 18px;
+		font-weight: 500;
+		padding: 10px 24px;
+		border-radius: 4px;
+		box-shadow: 0 0 5px #543a78;
+		cursor: pointer;
+		margin-bottom: 5px;
+		margin-right: 20px;
+		&:hover {
+			background-color: #4895ef;
+			box-shadow: 0 0 5px #4895ef;
+		}
+	}
+
+	.navBtnLogout {
+		border: none;
+	outline: none;
+	background: #543a78;
+	font-size: 18px;
+	font-weight: 500;
+	padding: 10px 8px;
+	border-radius: 4px;
+	box-shadow: 0 0 5px #543a78;
+	cursor: pointer;
+	margin-bottom: 5px;
+	margin-right: 20px;
+	&:hover {
+		background-color: #4895ef;
+		box-shadow: 0 0 5px #4895ef;
+		}
+	}
+
+	.userNameNav {
+		margin-left: 5px;
+	}
+
+	a {
+		color: white;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+	}
+
+	.navBtnProfile {
+		border: none;
+		outline: none;
+		background: #543a78;
+		font-size: 18px;
+		font-weight: 500;
+		padding: 10px 24px;
+		border-radius: 4px;
+		box-shadow: 0 0 5px #543a78;
+		cursor: pointer;
+		margin-bottom: 5px;
+		margin-right: 20px;
+		&:hover {
+			background-color: #4895ef;
+			box-shadow: 0 0 5px #4895ef;
+		}
+	}
+
+	.navProfile {
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.navButton {
+		font-family: 'Press Start 2P', cursive;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.navButtonSL{
+		font-family: 'Press Start 2P', cursive;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.navButtonLogin{
+		font-size: 10px
+		font-family: 'Press Start 2P', cursive;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.authButton {
+		border: none;
+		outline: none;
+		background: #543a78;
+		font-size: 18px;
+		font-weight: 500;
+		padding: 10px 7px;
+		border-radius: 4px;
+		box-shadow: 0 0 5px #543a78;
+		cursor: pointer;
+		margin-bottom: 5px;
+		margin-right: 20px;
+		&:hover {
+			background-color: #4895ef;
+			box-shadow: 0 0 5px #4895ef;
+		}
+	}
+
+	.navStyle {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
+	.navStyle2 {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
+	.authFlex {
+		display: flex;
+		align-items: center;
+	}
+
+	.welcome {
+		margin-right: 15px;
 	}
 `;
 
