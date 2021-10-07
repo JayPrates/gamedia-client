@@ -4,11 +4,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-function ListGames({ gamePage, searchValue }) {
+function ListGames({ gamePage, searchValue}) {
 	const [games, setGames] = useState([]);
 	const [searchGames, setSearchGames] = useState([]);
 
 	console.log("called");
+
 
 	useEffect(() => {
 		async function getAllGames() {
@@ -36,6 +37,7 @@ function ListGames({ gamePage, searchValue }) {
 
 		getAllGames();
 	}, [searchValue]);
+
 
 	useEffect(() => {
 		async function getSearchGames() {

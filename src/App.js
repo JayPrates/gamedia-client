@@ -39,7 +39,7 @@ function App() {
 					exact
 					path={["/", "/games"]}
 					render={() => {
-						return <InfiniteScroll searchValue={searchValue} />;
+						return <InfiniteScroll searchValue={searchValue} /* setTheState={setTheState} */ />;
 					}}
 				/>
 				<Route exact path={"/games/:id"} component={GamePage} />
