@@ -79,7 +79,7 @@ function GamePage(props) {
 			withCredentials: true,
 		});
 		history.push(`/games/${gameId}`);
-		setRefreshPosts(refreshPosts === 0 ? 1 : 0);
+		setRefreshPosts(!refreshPosts);
 	};
 
 	const handleCommentSubmit = async (e, post) => {
