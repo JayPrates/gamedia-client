@@ -44,7 +44,7 @@ function Profile({ loggedInUser }) {
 			userImg: response.data.fileUrl,
 		};
 
-		await axios.put(`http://localhost:5000/profile`, body, {
+		await axios.put(`${process.env.REACT_APP_SERVER_HOSTNAME}/profile`, body, {
 			withCredentials: true,
 		});
 
