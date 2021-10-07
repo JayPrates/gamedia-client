@@ -35,7 +35,7 @@ function Profile({ loggedInUser }) {
 			uploadData.append("file", image);
 
 			response = await axios.post(
-				`http://localhost:5000/upload`,
+				`${process.env.REACT_APP_SERVER_HOSTNAME}/upload`,
 				uploadData
 			);
 		}
