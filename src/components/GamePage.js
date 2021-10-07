@@ -64,7 +64,7 @@ function GamePage(props) {
 			uploadData.append("file", image);
 
 			response = await axios.post(
-				`http://localhost:5000/upload`,
+				`${process.env.REACT_APP_SERVER_HOSTNAME}/upload`,
 				uploadData
 			);
 		}
@@ -75,7 +75,7 @@ function GamePage(props) {
 			likes: 0,
 			mediaUrl: response && response.data.fileUrl,
 		};
-		await axios.post(`http://localhost:5000/games/${gameId}`, body, {
+		await axios.post(`${process.env.REACT_APP_SERVER_HOSTNAME}/games/${gameId}`, body, {
 			withCredentials: true,
 		});
 		history.push(`/games/${gameId}`);
@@ -89,7 +89,7 @@ function GamePage(props) {
 			comments: comment,
 		}
 
-		await axios.put(`http://localhost:5000/comments/${post._id}`, body, {
+		await axios.put(`${process.env.REACT_APP_SERVER_HOSTNAME}/comments/${post._id}`, body, {
 			withCredentials: true,
 		});
 		setRefreshPosts(!refreshPosts);
@@ -99,7 +99,7 @@ function GamePage(props) {
 		const body = {
 			postId,
 		};
-		await axios.put(`http://localhost:5000/post/${post._id}`, body, {
+		await axios.put(`${process.env.REACT_APP_SERVER_HOSTNAME}/post/${post._id}`, body, {
 			withCredentials: true,
 		});
 		//Calling after axios so it updates the posts first
@@ -113,7 +113,7 @@ function GamePage(props) {
 		};
 		setIsVisible(!isVisible)
 		console.log(isVisible);
-		await axios.put(`http://localhost:5000/favorite`, body, {
+		await axios.put(`${process.env.REACT_APP_SERVER_HOSTNAME}/favorite`, body, {
 			withCredentials: true,
 		});
 		//Calling after axios so it updates the posts first
