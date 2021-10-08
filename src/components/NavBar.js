@@ -413,7 +413,8 @@ const styles5 = css`
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		padding: 10px;
+		padding: 5px;
+		margin-top: 5px;
 	}
 
 	.authFlex {

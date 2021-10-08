@@ -238,8 +238,7 @@ function GamePage(props) {
 											<div className="centerWrap">
 												<div className="wrapPicAndName">
 													{post.userImg && (
-														<img src={post.userImg} width="420"
-														height="340"/>
+														<img src={post.userImg}/>
 													)}
 													<div>
 														{post.author}
@@ -574,6 +573,12 @@ const styles2 = css`
 	background: #151728;
 	border-radius: 15px;
 	margin: auto;
+
+	.postImg {
+		&:hover{
+			transform: scale(2);
+		}
+	}
 
 	.likesImage button {
 		margin-left: 20px;
