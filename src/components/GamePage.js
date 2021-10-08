@@ -8,7 +8,7 @@ import { whileStatement } from "@babel/types";
 import "animate.css/animate.min.css";
 import Zoom from 'react-reveal/Zoom';
 import Slide from 'react-reveal/Slide';
-
+import ShowMoreText from 'react-show-more-text';
 // import { Card } from "@mui/material";
 
 function GamePage(props) {
@@ -27,6 +27,7 @@ function GamePage(props) {
 	const [likes, setLikes] = useState("");
 	const [refreshPosts, setRefreshPosts] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
+	const [isVisibleLike, setIsVisibleLike] = useState(false);
 
 	useEffect(() => {
 		console.log("fetching game");
@@ -85,6 +86,10 @@ function GamePage(props) {
 		setRefreshPosts(!refreshPosts);
 	};
 
+	const showMoreOnClick = (isExpanded) => {
+		console.log(isExpanded);
+	};
+
 	const handleCommentSubmit = async (e, post) => {
 		e.preventDefault();
 		console.log('this is the comment', comment)
@@ -99,6 +104,7 @@ function GamePage(props) {
 	}
 
 	const getClickHandler = async (post) => {
+		setIsVisibleLike(!isVisibleLike)
 		const body = {
 			postId,
 		};
@@ -129,6 +135,8 @@ function GamePage(props) {
 				<div className="imgWrap">
 					<img
 						src={game.background_image}
+						width='402'
+						height='227'
 						className="gameImage"
 						alt="game"
 					/>
@@ -164,11 +172,24 @@ function GamePage(props) {
 								}
 							})}
 						</div>
+						<div className="text-hide">
+							<ShowMoreText
+								/* Default options */
+								lines={1}
+								more="Show more"
+								less="Show less"
+								className="gameDesc"
+								anchorClass="my-anchor-css-class"
+								onClick={showMoreOnClick}
+								expanded={false}
+								width={1000}
+								truncatedEndingComponent={""}
+							>
+								{game.description_raw}
+							</ShowMoreText>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div css={styles4}>
-				<div className="gameDesc">{game.description_raw}</div>
 			</div>
 			<h3>Make a Post</h3>
 			<div css={styles} className="wrapForm">
@@ -230,182 +251,182 @@ function GamePage(props) {
 					let date = new Date(post.createdAt);
 					return (
 						<>
-						<div style={{marginTop: '70px'}}>
-							<Zoom>
-								<div key={post._id} css={styles2}>
-									<div className="contentPost">
-										<div className="postForm">
-											<div className="centerWrap">
-												<div className="wrapPicAndName">
-													{post.userImg && (
-														<img src={post.userImg}/>
-													)}
-													<div>
-														{post.author}
+							<div style={{ marginTop: '70px' }}>
+								<Zoom>
+									<div key={post._id} css={styles2}>
+										<div className="contentPost">
+											<div className="postForm">
+												<div className="centerWrap">
+													<div className="wrapPicAndName">
+														{post.userImg && (
+															<img src={post.userImg} />
+														)}
 														<div>
-															{post.createdAt && (
-																<span>
-																	Post created:{" "}
-																	{date.toLocaleString(
-																		"default",
-																		{
-																			day: "2-digit",
-																			month: "short",
-																			year: "2-digit",
-																		}
-																	) +
-																		" " +
-																		date.getHours() +
-																		":" +
-																		String(
-																			date.getMinutes()
-																		).padStart(
-																			2,
-																			"0"
-																		)}{" "}
-																</span>
-															)}
+															{post.author}
+															<div>
+																{post.createdAt && (
+																	<span>
+																		Post created:{" "}
+																		{date.toLocaleString(
+																			"default",
+																			{
+																				day: "2-digit",
+																				month: "short",
+																				year: "2-digit",
+																			}
+																		) +
+																			" " +
+																			date.getHours() +
+																			":" +
+																			String(
+																				date.getMinutes()
+																			).padStart(
+																				2,
+																				"0"
+																			)}{" "}
+																	</span>
+																)}
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div className="postTitle">
-												<p>{post.title}</p>
-											</div>
-											<div className="commentPost">
-												<p>{post.description}</p>
-											</div>
-										</div>
-										<div className="mediaFile">
-											{post.mediaUrl &&
-												post.mediaUrl.includes("video")
-												? post.mediaUrl && (
-													<video
-														width="420"
-														height="340"
-														controls
-														src={post.mediaUrl}
-														type="video/mp4"
-													></video>
-												)
-												: post.mediaUrl && (
-													<img
-														className="postImg"
-														style={{
-															width: 350,
-															height: 250,
-														}}
-														src={post.mediaUrl}
-													/>
-												)}
-										</div>
-										<br />
-										<div>
-											<div className="likesImage">
-												<button
-													onClick={(e) =>
-														getClickHandler(post)
-													}
-												>
-													<img
-														src="/heart.png"
-														width="30px"
-														height="30px"
-														alt=""
-													/>
-												</button>
-											</div>
-											{post.likes > 0 && (
-												<div>{post.likes}</div>
-											)}
-										</div>
-										<div>
-											<form
-												onSubmit={(e) =>
-													handleCommentSubmit(post)
-												}
-											>
-												<label
-													style={{
-														fontSize: "18px",
-														marginLeft: "5px",
-													}}
-												>
-													Comment
-												</label>
-
-												<textarea
-													className="options"
-													key={post.id}
-													type="text"
-													onChange={(e) =>
-														setComment(e.target.value)
-													}
-													style={{
-														width: "98%",
-														margin: "5px",
-														background: "#242745",
-														border: "none",
-														color: "#fff",
-														outline: "none",
-													}}
-												/>
-												<div className='flexCommentBtn'>
-													<button
-														className="commentButton"
-														type="button"
-														onClick={(e) =>
-															handleCommentSubmit(e, post)
-														}
-													>
-														Send
-													</button>
+												<div className="postTitle">
+													<p>{post.title}</p>
 												</div>
-											</form>
+												<div className="commentPost">
+													<p>{post.description}</p>
+												</div>
+											</div>
+											<div className="mediaFile">
+												{post.mediaUrl &&
+													post.mediaUrl.includes("video")
+													? post.mediaUrl && (
+														<video
+															width="420"
+															height="340"
+															controls
+															src={post.mediaUrl}
+															type="video/mp4"
+														></video>
+													)
+													: post.mediaUrl && (
+														<img
+															className="postImg"
+															style={{
+																width: 350,
+																height: 250,
+															}}
+															src={post.mediaUrl}
+														/>
+													)}
+											</div>
+											<br />
+											<div style={{display: 'flex', justifyContent: 'flex-end', flexDirection:'column', alignItems: 'flex-end', marginRight: '20px'}}>
+												<div key={isVisibleLike} className={isVisibleLike ? 'animate__animated animate__bounce' : 'random'}>
+													<div>
+														<input
+															type='image'
+															src='/heart.png'
+															width='20px' height='20px'
+															onClick={() =>
+																getClickHandler(post)
+															}
+														></input>
+													</div>
+												</div>
+												<div>
+											{post.likes > 0 ? (
+															<div style={{marginRight: '5px'}}>{post.likes}</div>
+														) : (<div style={{marginRight: '5px', marginBottom: '18px'}}></div> )}
+														</div>
+											</div>
+											<div>
+												<form
+													onSubmit={(e) =>
+														handleCommentSubmit(post)
+													}
+												>
+													<label
+														style={{
+															fontSize: "18px",
+															marginLeft: "5px",
+														}}
+													>
+														Comment
+													</label>
+
+													<textarea
+														className="options"
+														key={post.id}
+														type="text"
+														onChange={(e) =>
+															setComment(e.target.value)
+														}
+														style={{
+															width: "98%",
+															margin: "5px",
+															background: "#242745",
+															border: "none",
+															color: "#fff",
+															outline: "none",
+														}}
+													/>
+													<div className='flexCommentBtn'>
+														<button
+															className="commentButton"
+															type="button"
+															onClick={(e) =>
+																handleCommentSubmit(e, post)
+															}
+														>
+															Send
+														</button>
+													</div>
+												</form>
+											</div>
 										</div>
 									</div>
-								</div>
-							</Zoom>
+								</Zoom>
 							</div>
 							<div>
 								{post.comments.map((comment) => {
 									return (
 										<>
 											<Slide right>
-											<div className="contentPost" css={styles6}>
-												{comment.theUser && (
-													<div css={styles5}>
-														<br />
-														<div className="postComments">
-															<div className="commentDetails">
-																{comment.theUserImg && (
-																	<img
-																		className="commentUserImg"
-																		src={
-																			comment.theUserImg
-																		}
-																		width="40px"
-																		height="40px"
-																	/>
-																)}
-																{comment.theUser && (
-																	<div className="commentUserName">
-																		{
-																			comment.theUser
-																		}
-																	</div>
-																)}
+												<div className="contentPost" css={styles6}>
+													{comment.theUser && (
+														<div css={styles5}>
+															<br />
+															<div className="postComments">
+																<div className="commentDetails">
+																	{comment.theUserImg && (
+																		<img
+																			className="commentUserImg"
+																			src={
+																				comment.theUserImg
+																			}
+																			width="40px"
+																			height="40px"
+																		/>
+																	)}
+																	{comment.theUser && (
+																		<div className="commentUserName">
+																			{
+																				comment.theUser
+																			}
+																		</div>
+																	)}
+																</div>
+															</div>
+															<div className="userComment">
+																<div>
+																	{
+																		comment.thisComment
+																	}
+																</div>
 															</div>
 														</div>
-														<div className="userComment">
-															<div>
-																{
-																	comment.thisComment
-																}
-															</div>
-														</div>
-													</div>
-												)}
+													)}
 												</div>
 											</Slide>
 										</>
@@ -576,7 +597,7 @@ const styles2 = css`
 
 	.postImg {
 		&:hover{
-			transform: scale(2);
+			transform: scale(1.2);
 		}
 	}
 
@@ -592,6 +613,7 @@ const styles2 = css`
 
 	.commentButton {
 		margin: 20px 20px 5px 5px;
+		margin-bottom: 25px;
 		border: none;
 		outline: none;
 		background: #fff;
@@ -681,7 +703,7 @@ const styles2 = css`
 		}
 	}`;
 
-	const styles6 = css`
+const styles6 = css`
 	width: 550px;
 	background: #2d2f3f;
 	box-shadow: 0 0 5px #543a78;
@@ -780,6 +802,19 @@ const styles3 = css`
 	background: #151728;
 	color: #fff;
 
+	.text-hide {
+		margin: 10px;
+		width: 882px;
+	}
+
+	.text-hide a {
+		text-decoration: none;
+		display: flex;
+		justify-content: center;
+		margin-top: 10px;
+		color: #4895ef;
+	}
+
 	.wrapTitleAndStar {
 		display: flex;
 	}
@@ -809,7 +844,6 @@ const styles3 = css`
 		font-size: 18px;
 	}
 	.gameImage {
-		width: 30%;
 		margin-bottom: 25px;
 	}
 	.imgWrap {
@@ -817,6 +851,12 @@ const styles3 = css`
 		padding-top: 25px;
 		padding-left: 10px;
 	}
+
+	.imgWrap img {
+		width: 422px;
+		height: 227px;
+	}
+
 	.gameDetails {
 		margin-left: 20px;
 	}
@@ -852,11 +892,11 @@ const styles4 = css`
 	.gameDesc {
 		display: flex;
 		justify-content: center;
-		width: 1200px;
-		margin: auto;
+		width: 882px !important;
 		padding: 5px;
 		font-size: 16px;
 	}
+
 `;
 
 const styles5 = css`

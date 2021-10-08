@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 
-function Profile({ loggedInUser }) {
+function Profile({ loggedInUser, setNavbarInvisible }) {
 	const history = useHistory();
 	const [user, setUser] = useState({});
 	const [image, setImage] = useState("");
@@ -23,6 +23,7 @@ function Profile({ loggedInUser }) {
 			setUser(response.data);
 		}
 		getUser();
+		setNavbarInvisible(false)
 	}, [updatedImage]);
 
 	console.log(loggedInUser);

@@ -11,9 +11,6 @@ function Signup({setNavbarInvisible}) {
 	const history = useHistory();
 	const [image, setImage] = useState("");
 
-	useEffect(() => {
-		setNavbarInvisible(false);
-	}, [])
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
@@ -63,8 +60,10 @@ function Signup({setNavbarInvisible}) {
 							className="authTextStyle"
 							required
 						/>
+						<label className='authSubTitle2' >Profile Picture</label>
 						<input
 							type="file"
+							style={{marginBottom: '10px'}}
 							onChange={(e) => setImage(e.target.files[0])}
 						/>
 						<button type="submit" className="button">
@@ -84,6 +83,10 @@ const styles = css`
 	height: 400px;
 	font-family: sans-serif;
 
+	.input {
+		margin-bottom: 10px;
+	}
+
 	.authPageStyle {
 		width: 300px;
 	}
@@ -94,6 +97,12 @@ const styles = css`
 
 	.authSubTitle {
 		font-weight: 600;
+	}
+
+	.authSubTitle2 {
+		font-size: 15px;
+		font-weight: 600;
+		font-family: sans-serif;
 	}
 
 	.authTextStyle[type="text"],

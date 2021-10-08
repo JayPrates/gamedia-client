@@ -27,8 +27,8 @@ function Login({ setCurrentLoggedInUser }) {
 				{ withCredentials: true }
 			);
 			if (response.data.username) {
-				toast.success("Login success");
 				setCurrentLoggedInUser(response.data); //Comes from the app component
+				toast.success("Login success");
 				history.push("/");
 			}
 		} catch (e) {

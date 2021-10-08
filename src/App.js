@@ -9,6 +9,8 @@ import Profile from "./components/Profile";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InfiniteScroll from "./components/InfiniteScroll";
+import {ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
 	const [loggedInUser, setCurrentLoggedInUser] = useState("");
@@ -34,13 +36,14 @@ function App() {
 
 	return (
 		<div className="App">
+			<ToastContainer/>
 			<NavBar
 				loggedInUser={loggedInUser}
 				setCurrentLoggedInUser={setCurrentLoggedInUser}
 				setSearchValue={setSearchValue}
 				/* setNavbarInvisible={setNavbarInvisible} */
 				navbarInvisible={navbarInvisible}
-			/>
+				/>
 			<Switch>
 				<Route
 					exact
