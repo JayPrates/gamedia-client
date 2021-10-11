@@ -26,8 +26,6 @@ function Profile({ loggedInUser, setNavbarInvisible }) {
 		setNavbarInvisible(false)
 	}, [updatedImage]);
 
-	console.log(loggedInUser);
-
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		let response;

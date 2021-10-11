@@ -22,7 +22,6 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 	};
 
 	useEffect(() => {
-		console.log(search);
 		setSearchValue(search);
 	
 		/* return(<>
@@ -30,12 +29,6 @@ function NavBar({ loggedInUser, setCurrentLoggedInUser, setSearchValue, navbarIn
 		<InfiniteScroll searchBarVal={search}/>
 		</>) */
 	}, [search]);
-
-	useEffect(() => {
-		console.log(navbarInvisible)
-	}, [])
-
-	console.log('visible or not', navbarInvisible)
 
 	return loggedInUser ? (
 		<>

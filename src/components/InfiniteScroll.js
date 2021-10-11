@@ -38,7 +38,6 @@ function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 		if (loader.current) {
 			observer.observe(loader.current);
 		}
-		console.log("page", page);
 	}, [searchValue]);
 
 	useEffect(() => {
@@ -56,7 +55,6 @@ function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 
 		if (target.isIntersecting) {
 			setPage((page) => page + 1);
-			console.log("pages", page);
 		}
 	};
 
@@ -64,7 +62,6 @@ function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 		return () => {
 			setNavbarInvisible(false);
 			/* console.log('what is this', setNavbarInvisible) */
-			console.log("Component is unmounting");
 		};
 	}, []);
 

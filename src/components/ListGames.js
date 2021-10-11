@@ -8,9 +8,6 @@ function ListGames({ gamePage, searchValue}) {
 	const [games, setGames] = useState([]);
 	const [searchGames, setSearchGames] = useState([]);
 
-	console.log("called");
-
-
 	useEffect(() => {
 		async function getAllGames() {
 			if (searchValue === "") {
@@ -26,7 +23,6 @@ function ListGames({ gamePage, searchValue}) {
 				};
 
 				const response = await axios.request(options);
-				console.log(response.data.results);
 				if (searchValue !== "") {
 					setGames([]);
 				} else {
@@ -54,7 +50,6 @@ function ListGames({ gamePage, searchValue}) {
 				};
 
 				const searchResponse = await axios.request(search);
-				console.log("search games", searchResponse.data.results);
 				setSearchGames(searchResponse.data.results);
 			}
 		}

@@ -44,7 +44,6 @@ function GamePage(props) {
 			};
 
 			const response = await axios.request(options);
-			console.log("data", response.data);
 			setGame(response.data);
 			setTags(response.data.tags);
 		}
@@ -55,7 +54,7 @@ function GamePage(props) {
 				`${process.env.REACT_APP_SERVER_HOSTNAME}/games/${gameId}`,
 				{ withCredentials: true }
 			);
-			setPosts(allPosts.data);
+			setPosts(allPosts.data.reverse());
 		}
 		getPosts();
 	}, [refreshPosts]);
@@ -92,7 +91,6 @@ function GamePage(props) {
 
 	const handleCommentSubmit = async (e, post) => {
 		e.preventDefault();
-		console.log('this is the comment', comment)
 		const body = {
 			comments: comment,
 		}
@@ -116,7 +114,6 @@ function GamePage(props) {
 	};
 
 	const getFavoriteHandler = async (game) => {
-		console.log(game)
 		const body = {
 			favoriteGames: { favGameName: game.name, favGameId: game.id },
 		};
@@ -128,7 +125,6 @@ function GamePage(props) {
 		//Calling after axios so it updates the posts first
 	};
 
-	console.log("tags", tags);
 	return (
 		<>
 			<div css={styles3}>
