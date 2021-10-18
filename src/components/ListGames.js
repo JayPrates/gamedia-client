@@ -69,7 +69,7 @@ function ListGames({ gamePage, searchValue}) {
 				{games.map((game) => {
 					return (
 						<>
-							<div className="spacing">
+							<div className="spacing" key={game.id}>
 								<NavLink
 									className="gameLink"
 									to={`/games/${game.id}`}
