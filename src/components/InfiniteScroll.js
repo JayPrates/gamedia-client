@@ -8,7 +8,7 @@ const containerStyle = {
 
 function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 	const [postList, setPostList] = useState({
-		list: [1, 2, 3, 4],
+		list: [1],
 	});
 	// tracking on which page we currently are
 	const [page, setPage] = useState(1);
@@ -42,7 +42,7 @@ function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 
 	useEffect(() => {
 		// here we simulate adding new posts to List
-		const newList = postList.list.concat([1, 1]);
+		const newList = postList.list.concat([1, 1, 1, 1]);
 		setPostList({
 			list: newList,
 		});
