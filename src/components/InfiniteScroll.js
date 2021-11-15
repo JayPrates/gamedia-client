@@ -42,7 +42,7 @@ function InfiniteScroll({ searchValue, setNavbarInvisible }) {
 
 	useEffect(() => {
 		// here we simulate adding new posts to List
-		const newList = postList.list.concat([1, 1, 1, 1]);
+		const newList = postList.list.concat([1, 1]);
 		setPostList({
 			list: newList,
 		});
