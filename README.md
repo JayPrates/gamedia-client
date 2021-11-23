@@ -1,7 +1,6 @@
 
 
-# Gamedia
-## Front End
+# Gamedia - Front End
 
 <p align="center">
 <img src='gamediaGIF.gif'/>
