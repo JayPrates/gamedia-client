@@ -44,6 +44,8 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 ### Live Demo
 
+A live demo of the gamedia web app can be found in the following link:
+<br/>
 <a href="https://gamedia.netlify.app/"> gamedia </a>
 
 ## Functionalities
