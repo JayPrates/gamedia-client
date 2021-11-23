@@ -19,8 +19,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Description
 
-For this project I created a full-stack application using MERN Stack.
-Gamedia is a social media web application made to connect all gamers though a variety of communities by allowing them to share experiences through posts.
+Gamedia is a a full-stack application created using MERN Stack. It's a social media web application made to connect all gamers though a variety of communities by allowing them to share experiences through posts.
 
 
 ## Back End
