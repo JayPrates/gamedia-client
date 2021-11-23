@@ -25,7 +25,9 @@ Gamedia is a social media web application made to connect all gamers though indi
 
 ## Back End
 The back-end portion of this project can be found at the following link:
-<a href="https://github.com/JayPrates/gamedia-server"> gamedia-server </a>
+<a href="https://github.com/JayPrates/gamedia-server"> 
+<br />  
+gamedia-server </a>
 
 
 
