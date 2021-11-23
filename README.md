@@ -44,27 +44,30 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 ### Live Demo
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+<a href="https://gamedia.netlify.app/"> gamedia </a>
 
 ## Functionalities
 
+gamedia allows it's user's to:
+
+* To create their very own account
+* Edit their profile
+* Create posts
+* Like posts
+* Comment on posts
+* Search for games
+* Favourite games
+* It provides users with details of new releases
 
 
 
-
-
-
-
-<!-- CONTACT -->
 ## Contact
 
 João Prates - joaoprates.az@gmail.com
 
-Project Link: [https://github.com/JayPrates/gamedia-client](https://github.com/JayPrates/gamedia-client)
+linkedin - <a href="https://www.linkedin.com/in/joao-prates-az/"> João Prates </a>
+
+GitHub: [https://github.com/JayPrates/](https://github.com/JayPrates/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
