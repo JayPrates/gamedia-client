@@ -19,17 +19,12 @@
 <!-- ABOUT THE PROJECT -->
 ## Description
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+For the final project of the bootcamp we were required to build a full-stack application using MERN Stack and all the skills we learned over the course of the 9 week curriculum.
+Gamedia is a social media web application made to connect all gamers though individual game communities by allowing them to share experiences on posts that they make.
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
+## Back End
+The back-end portion of this project can be found at the following link:
 <a href="https://github.com/JayPrates/gamedia-server"> gamedia-server </a>
 
 
