@@ -5,7 +5,7 @@
 <p align="center">
 <img src='gamediaGIF.gif'/>
 </p>
-<!-- PROJECT LOGO -->
+
 
 
 <br />
@@ -15,7 +15,6 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
 ## Description
 
 Gamedia is a a full-stack application created using MERN Stack. It's a social media web application made to connect all gamers though a variety of communities by allowing them to share experiences through posts.
@@ -31,7 +30,7 @@ gamedia-server </a>
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
 
 * [React.js](https://reactjs.org/)
 * [Bootstrap](https://getbootstrap.com)
