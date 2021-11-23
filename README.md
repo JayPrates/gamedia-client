@@ -3,7 +3,7 @@
 # Gamedia
 ## Front End
 
-<p text-align="center">
+<p align="center">
 <img src='gamediaGIF.gif'/>
 </p>
 <!-- PROJECT LOGO -->
